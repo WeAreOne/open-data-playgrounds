@@ -12,9 +12,7 @@ export default class MapService {
         let sport = pSport.replace(/ /g,'+').replace(/à/g, '%C3%A0').replace(/é/g, '%C3%A9').replace(/é/g, '%C3%A8');
         let sportUrl = this.URL.replace(/@where@/g, `SPORT='${sport}'` );
 
-        return fetch(sportUrl).then(res => {
-            return res.json()
-        });
+        return fetch(sportUrl).then(res =>  res.json());
     }
     static getAllSport() {
         return fetch(this.URL_SPORTS).then(res => res.json());
