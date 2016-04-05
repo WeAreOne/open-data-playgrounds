@@ -1,5 +1,5 @@
 import React,
-    {Component, StyleSheet, View, ScrollView, Text,
+    {Component, StyleSheet, View, ScrollView, ListView, Text,
     TextInput, Dimensions, TouchableOpacity} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -50,15 +50,17 @@ export default class CityList extends Component {
                     placeholder="Search a city"
                 />
                 <View style={styles.separator} />
+                <View style={{flex:1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent:'center'}}>
                 {
                     cities.map((c,i) => {
                         return (
-                            <View key={i}>
+                            <View key={i} style={{width: 150, height: 100, backgroundColor: '#CCC', margin: 5}}>
                                 <Text>{c.name.toUpperCase()}</Text>
                             </View>
                         )
                     })
                 }
+                </View>
             </ScrollView>
         )
     }
