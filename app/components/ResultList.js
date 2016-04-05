@@ -1,5 +1,5 @@
 import React, {Component, StyleSheet, View, ScrollView, TouchableHighlight, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -57,8 +57,8 @@ export default class ResultList extends Component {
                                             <Text>{r.attributes.COMMUNE}</Text>
                                             <Text>{r.attributes.NCOM}</Text>
                                         </View>
-                                        <View style={{flex: 1}}>
-                                            <Icon name="chevron-right" size={23} color="#000" />
+                                        <View style={{flex: 1, height: 60, justifyContent: 'center'}}>
+                                            <Icon name="keyboard-arrow-right" size={23} color="#000" />
                                         </View>
                                     </View>
                                     <View style={styles.separator}></View>
