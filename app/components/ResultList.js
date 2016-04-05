@@ -34,6 +34,7 @@ export default class ResultList extends Component {
     componentDidMount() {
         MapService.getBySport(this.props.data.name).then(
             results => {
+                console.log(results);
                 this.setState({results: results.features, showLoader: false});
             }
         )
