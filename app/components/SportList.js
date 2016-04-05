@@ -1,10 +1,10 @@
-import React, {Component, View, Text, Image, Dimensions, TouchableHighlight, StyleSheet} from 'react-native';
+import React, {Component, View, ScrollView,  Text, Image, Dimensions, TouchableHighlight, StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-flux'
-import Carousel from 'react-native-carousel';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 //APP
 import MapService from '../services/MapService';
+import PictureService from '../services/PictureService';
 
 const dim = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'cover',
         width: dim.width,
-        height: dim.height
+        height: 200
     }
 });
 
@@ -53,7 +53,9 @@ export default class SportList extends Component {
             showLoader: true
         };
         this.sportsOverride = [
-            {name: 'Gymnastique', fontColor: 'white'}
+            {name: 'gymnastique', fontColor: 'white'},
+            {name: 'yoga', bcolor: '#DDDDDD66'},
+            {name: 'arts martiaux', bcolor: '#DDDDDD66'},
         ];
     }
     componentWillMount() {
@@ -68,38 +70,29 @@ export default class SportList extends Component {
         Actions.resultList({data: sport, title: sport.name})
     }
     _getPicture(sport) {
-        let image;
-        switch(sport.name.toLowerCase()) {
-            case 'basketball':
-                image = require('../../assets/sports/basketball.jpg');
-                break;
-            case 'tennis':
-                image = require('../../assets/sports/tennis.jpg');
-                break;
-            case 'football':
-                image = require('../../assets/sports/football.jpg');
-                break;
-            case 'gymnastique':
-                image = require('../../assets/sports/gym.jpg');
-                break;
+        return PictureService.getPicture(sport)
+    }
+    _getStyle(sport) {
+        let sportOverride = this.sportsOverride.filter(s => s.name === sport.name.toLowerCase());
+        if (sportOverride.length > 0) {
+            return {backgroundColor: sportOverride[0].bcolor}
         }
-        return image;
+        return {}
     }
     render() {
         return (
             <View style={styles.page}>
                 <Spinner visible={this.state.showLoader} color="red" />
-                <Carousel width={375} hideIndicators={true} animate={false}>
+                <ScrollView style={{flex:1, flexDirection: 'column'}}>
                     {
                         this.state.sports.map(
                             (sport,i) => {
                                 return (
-                                    <View key={i} style={styles.container}>
+                                    <View key={i} style={{height: 200}}>
                                         <TouchableHighlight onPress={this._result.bind(this, sport)}>
                                             <View style={styles.categoryContainer}>
                                                 <Image source={this._getPicture(sport)} style={styles.categoryImage} />
-                                                <Text style={[styles.text,
-                                                    {color: sport.fontColor||'black', borderColor: sport.fontColor||'black'}]}>
+                                                <Text style={[styles.text, this._getStyle(sport)]}>
                                                         {sport.name}
                                                 </Text>
                                             </View>
@@ -109,7 +102,7 @@ export default class SportList extends Component {
                             }
                         )
                     }
-                </Carousel>
+                </ScrollView>
             </View>
         )
     }
