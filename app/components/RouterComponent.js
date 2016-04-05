@@ -13,7 +13,7 @@ export default class RouterComponent extends Component{
     render(){
         return (
             <Router>
-                <Scene key="root">
+                <Scene key="root" navigationBarStyle={{ backgroundColor:'transparent' }}>
                     <Scene key="sportCity" component={SportCity} initial={true} hideNavBar={true} title="App"/>
                     <Scene key="sportList" component={SportList} title="Choose a sport" background="sports.jpg"/>
                     <Scene key="cityList" component={CityList} title="Choose a city"/>

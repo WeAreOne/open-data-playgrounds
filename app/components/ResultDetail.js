@@ -35,20 +35,23 @@ export default class ResultDetail extends Component {
         let map;
         if (this.state.point.easting) {
             map = (
-                <MapView
-                    style={ styles.map }
-                    initialRegion={{
-                          latitude: +this.state.point.northing,
-                          longitude: +this.state.point.easting,
-                          latitudeDelta: 0.0922,
-                          longitudeDelta: 0.0421,
-                        }}
-                >
-                    <MapView.Marker
-                        key={0}
-                        coordinate={{latitude: +this.state.point.northing, longitude: +this.state.point.easting}}
-                    />
-                </MapView>
+                <View style={{height: 150}}>
+                    <MapView
+                        style={ styles.map }
+                        initialRegion={{
+                              latitude: +this.state.point.northing,
+                              longitude: +this.state.point.easting,
+                              latitudeDelta: 0.0052,
+                              longitudeDelta: 0.0052,
+                            }}
+                    >
+                        <MapView.Marker
+                            key={0}
+                            coordinate={{latitude: +this.state.point.northing, longitude: +this.state.point.easting}}
+                            color="black"
+                        />
+                    </MapView>
+                </View>
             )
         }
         return (
@@ -57,6 +60,9 @@ export default class ResultDetail extends Component {
                 <Text>{this.props.data.attributes.SPORT}</Text>
                 <Text>{this.props.data.attributes.COMMUNE}</Text>
                 <Text>{this.props.data.attributes.TYPE}</Text>
+                <Text>{this.props.data.attributes.NCOM}</Text>
+                <Text>{this.props.data.attributes.LIEN_FICHE_DESCRIPTIVE}</Text>
+                <Text>{this.props.data.attributes.LIEN_PHOTOS}</Text>
                 <Text>{this.props.data.geometry.x}</Text>
                 <Text>{this.props.data.geometry.y}</Text>
                 <Text>Latitude : {this.state.point.northing}</Text>
