@@ -23,6 +23,21 @@ export default class PictureService {
             case 'arts martiaux':
                 image = require('../../assets/sports/arts-martiaux.jpg');
                 break;
+            case 'saut à la perche':
+                image = require('../../assets/sports/saut-a-la-perche.jpg');
+                break;
+            case 'sambo':
+                image = require('../../assets/sports/sambo.jpg');
+                break;
+            case 'promenade équestre':
+                image = require('../../assets/sports/promenade-equestre.jpg');
+                break;
+            case 'hockey sur glace':
+                image = require('../../assets/sports/hockey-sur-glace.jpeg');
+                break;
+            case 'waterpolo':
+                image = require('../../assets/sports/water-polo.jpg');
+                break;
             default:
                 image = require('../../assets/sports/default.jpg');
                 break;

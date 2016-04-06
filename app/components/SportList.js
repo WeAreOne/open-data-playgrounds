@@ -56,9 +56,14 @@ export default class SportList extends Component {
             showLoader: true
         };
         this.sportsOverride = [
-            {name: 'gymnastique', fontColor: 'white'},
+            {name: 'gymnastique', bcolor: '#DDDDDD66'},
             {name: 'yoga', bcolor: '#DDDDDD66'},
             {name: 'arts martiaux', bcolor: '#DDDDDD66'},
+            {name: 'tennis', bcolor: '#DDDDDD66'},
+            {name: 'saut à la perche', bcolor: '#DDDDDD66'},
+            {name: 'sambo', bcolor: '#DDDDDD66'},
+            {name: 'promenade équestre', bcolor: '#DDDDDD66'},
+            {name: 'waterpolo', bcolor: '#DDDDDD66'},
         ];
     }
     componentWillMount() {
