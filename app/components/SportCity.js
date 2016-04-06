@@ -12,20 +12,27 @@ const styles = StyleSheet.create({
     },
     category: {
         flex: 1,
-        resizeMode: 'contain',
-        position: 'relative'
+        resizeMode: 'cover',
+        position: 'relative',
+        width: dim.width
+    },
+    categoryTextWrapper: {
+        borderWidth: 2,
+        borderColor: 'black',
+        position: 'absolute',
+        top: dim.height / 4 - 25,
+        left: 100,
+        width: 150,
+        paddingTop: 20,
+        paddingBottom: 20
     },
     categoryText: {
         color: 'black',
         backgroundColor: '#00000000',
-        position: 'absolute',
         width: 150,
-        padding: 20,
         textAlign: 'center',
         fontSize: 25,
-        fontWeight: 'bold',
-        borderWidth: 2,
-        borderColor: 'black'
+        fontWeight: 'bold'
     }
 });
 
@@ -33,48 +40,32 @@ export default class SportCity extends Component {
     constructor() {
         super();
         this.state = {
-            opacityCity: new Animated.Value(1),
-            opacitySport: new Animated.Value(1),
+
         };
     }
     _goToCities() {
-        Animated.spring(                          // Base: spring, decay, timing
-            this.state.opacityCity,                 // Animate `bounceValue`
-            {
-                toValue: 0.1                          // Bouncier spring
-            }
-        ).start(
-            () => {
-                this.state.opacityCity.setValue(1);
-                Actions.cityList();
-            }
-        );
+        Actions.cityList();
     }
     _goToSportList() {
-        Animated.spring(                          // Base: spring, decay, timing
-            this.state.opacitySport,                 // Animate `bounceValue`
-            {
-                toValue: 0.1                          // Bouncier spring
-            }
-        ).start(
-            () => {
-                this.state.opacitySport.setValue(1);
-                Actions.sportList();
-            }
-        );    }
+        Actions.sportList();
+    }
     render() {
         return (
             <View style={styles.page}>
                 <TouchableOpacity onPress={this._goToCities.bind(this)} style={{flex: 1}}>
                     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
                         <Image source={require('../../assets/city.jpeg')} style={styles.category}/>
-                        <Animated.Text style={[styles.categoryText, {top: 150, left: 100, opacity: this.state.opacityCity}]}>Cities</Animated.Text>
+                        <View style={styles.categoryTextWrapper}>
+                            <Text style={[styles.categoryText]}>Cities</Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this._goToSportList.bind(this)} style={{flex: 1}}>
                     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
                         <Image source={require('../../assets/sport.jpeg')} style={styles.category}/>
-                        <Animated.Text style={[styles.categoryText, {top: 150, left: 100, opacity: this.state.opacitySport}]}>Sports</Animated.Text>
+                        <View style={styles.categoryTextWrapper}>
+                            <Text style={[styles.categoryText]}>Sports</Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
             </View>

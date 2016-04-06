@@ -23,6 +23,9 @@ export default class PictureService {
             case 'arts martiaux':
                 image = require('../../assets/sports/arts-martiaux.jpg');
                 break;
+            default:
+                image = require('../../assets/sports/default.jpg');
+                break;
         }
         return image;
     }

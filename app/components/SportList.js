@@ -18,19 +18,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'transparent',
     },
-    text: {
+    textWrapper: {
         position: 'absolute',
-        top: 100,
-        textAlign:'center',
-        fontSize: 23,
-        color: 'black',
+        top: 65,
         width: dim.width / 3 + 50,
         left: dim.width / 3 - 25,
         borderWidth: 2,
+        borderColor: 'black',
         paddingTop: 15,
         paddingBottom: 15,
-        fontWeight: 'bold',
         backgroundColor: '#00000010'
+    },
+    text: {
+        textAlign:'center',
+        fontSize: 23,
+        color: 'black',
+        fontWeight: 'bold',
     },
     categoryContainer: {
         flex: 1,
@@ -92,9 +95,9 @@ export default class SportList extends Component {
                                         <TouchableHighlight onPress={this._result.bind(this, sport)}>
                                             <View style={styles.categoryContainer}>
                                                 <Image source={this._getPicture(sport)} style={styles.categoryImage} />
-                                                <Text style={[styles.text, this._getStyle(sport)]}>
-                                                        {sport.name}
-                                                </Text>
+                                                <View style={[styles.textWrapper, this._getStyle(sport)]}>
+                                                    <Text style={styles.text}>{sport.name}</Text>
+                                                </View>
                                             </View>
                                         </TouchableHighlight>
                                     </View>
