@@ -1,7 +1,8 @@
 import React,
     {Component, StyleSheet, View, ScrollView, ListView, Text,
-    TextInput, Dimensions, TouchableOpacity} from 'react-native';
+    TextInput, Dimensions, TouchableHighlight} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import {Actions} from 'react-native-router-flux';
 
 //App
 import MapService from '../services/MapService';
@@ -30,10 +31,13 @@ export default class CityList extends Component {
     componentWillMount() {
         MapService.getAllCity().then(res => {
            let cities = res.features.map(c => {
-               return {name: c.attributes.COMMUNE};
+               return {name: c.attributes.COMMUNE, nbSport: c.attributes.NBSPORT};
            }).sort((a,b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1) ;
            this.setState({showLoader: false, cities})
         });
+    }
+    _goToCityDetail(city) {
+        Actions.cityDetail({data: city, title: city.name.toUpperCase()})
     }
     render() {
         let cities = this.state.cities;
@@ -50,12 +54,18 @@ export default class CityList extends Component {
                     placeholder="Search a city"
                 />
                 <View style={styles.separator} />
-                <View style={{flex:1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent:'center'}}>
+                <View style={{flex:1, alignItems: 'flex-start', justifyContent:'center', paddingLeft: 10}}>
                 {
                     cities.map((c,i) => {
                         return (
-                            <View key={i} style={{width: 150, height: 100, backgroundColor: '#CCC', margin: 5}}>
-                                <Text>{c.name.toUpperCase()}</Text>
+                            <View key={i}>
+                                <TouchableHighlight onPress={this._goToCityDetail.bind(this, c)}>
+                                    <View>
+                                        <Text>{c.name.toUpperCase()}</Text>
+                                        <Text>{c.nbSport}</Text>
+                                    </View>
+                                </TouchableHighlight>
+                                <View style={styles.separator}></View>
                             </View>
                         )
                     })

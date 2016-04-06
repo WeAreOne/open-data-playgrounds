@@ -59,7 +59,7 @@ export default class ResultList extends Component {
                                             <Text>{r.attributes.NCOM}</Text>
                                         </View>
                                         <View style={{flex: 1, height: 60, justifyContent: 'center'}}>
-                                            <Icon name="keyboard-arrow-right" size={23} color="#000" />
+                                            <Icon name="favorite-border" size={23} color="#000" />
                                         </View>
                                     </View>
                                     <View style={styles.separator}></View>
