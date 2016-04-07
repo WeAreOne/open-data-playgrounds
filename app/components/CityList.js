@@ -1,6 +1,7 @@
-import React,
-    {Component, StyleSheet, View, ScrollView, ListView, Text,
-    TextInput, Dimensions, TouchableHighlight} from 'react-native';
+import React, {
+    Component, StyleSheet, View, ScrollView, ListView, Text,
+    TextInput, Dimensions, TouchableHighlight,
+    Image} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {Actions} from 'react-native-router-flux';
 
@@ -60,9 +61,12 @@ export default class CityList extends Component {
                         return (
                             <View key={i}>
                                 <TouchableHighlight onPress={this._goToCityDetail.bind(this, c)}>
-                                    <View>
-                                        <Text>{c.name.toUpperCase()}</Text>
-                                        <Text>{c.nbSport}</Text>
+                                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                        <Image source={require('../../assets/city-icon.png')} style={{width: 45, height: 45, margin: 5, resizeMode:'stretch', marginRight: 5}}/>
+                                        <Text style={{width: 160}}>{c.name.toUpperCase()}</Text>
+                                        <Text>
+                                            <Text style={{fontWeight: 'bold'}}>{c.nbSport}</Text> PLAYGROUNDS
+                                        </Text>
                                     </View>
                                 </TouchableHighlight>
                                 <View style={styles.separator}></View>

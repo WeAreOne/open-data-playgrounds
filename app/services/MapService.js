@@ -14,6 +14,12 @@ export default class MapService {
 
         return fetch(sportUrl).then(res =>  res.json());
     }
+    static getByCity(pCity) {
+        let city = pCity.replace(/ /g,'+').replace(/à/g, '%C3%A0').replace(/é/g, '%C3%A9').replace(/é/g, '%C3%A8');
+        let cityUrl = this.URL.replace(/@where@/g, `COMMUNE='${city}'` );
+
+        return fetch(cityUrl).then(res =>  res.json());
+    }
     static getAllSport() {
         return fetch(this.URL_SPORTS).then(res => res.json());
     }
