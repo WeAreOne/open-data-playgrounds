@@ -1,5 +1,5 @@
-import React, {Component, View, Text} from 'react-native';
-import {Actions, Scene, Router} from 'react-native-router-flux';
+import React, {Component, View, Text, StyleSheet} from 'react-native';
+import {Scene, Router} from 'react-native-router-flux';
 
 
 // App
@@ -10,11 +10,24 @@ import CityDetail from './CityDetail';
 import ResultList from './ResultList';
 import ResultDetail from './ResultDetail';
 
+
+const styles = StyleSheet.create({
+    navBar: {
+        backgroundColor:'#FFF',
+        shadowColor: '#555',
+        shadowOpacity: 0.8,
+        shadowOffset : {
+            width: 1,
+            height: 1
+        },
+        elevation: 2
+    }
+})
 export default class RouterComponent extends Component{
     render(){
         return (
             <Router>
-                <Scene key="root" navigationBarStyle={{ backgroundColor:'#FFF', borderBottomColor: 'black', borderBottomWidth: 2 }}>
+                <Scene key="root" navigationBarStyle={styles.navBar}>
                     <Scene key="sportCity" component={SportCity} initial={true} hideNavBar={true} title="App"/>
                     <Scene key="sportList" component={SportList} title="Choose a sport" background="sports.jpg"/>
                     <Scene key="cityList" component={CityList} title="Choose a city"/>

@@ -9,7 +9,8 @@ import PictureService from '../services/PictureService';
 const dim = Dimensions.get('window');
 const styles = StyleSheet.create({
     page: {
-        flex: 1
+        flex: 1,
+        paddingTop: 65
     },
     container: {
         width: 375,
