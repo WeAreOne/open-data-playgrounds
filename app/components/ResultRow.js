@@ -10,16 +10,26 @@ const styles = StyleSheet.create({
     container: {
         borderWidth: 2,
         borderColor: '#DDD',
+        shadowColor: '#DDD',
+        shadowOpacity: 0.8,
+        shadowOffset: {
+            width: 2,
+            height: 2
+        },
+        elevation: 2,
         margin: 10,
         marginBottom: 20,
         flex: 1
     },
-    map: {height: 150, flex: 1},
+    map: {
+        height: 150,
+        flex: 1
+    },
     rowContainer: {
         backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'center',
-        paddingLeft: 5,
+        padding: 5,
         flex: 1
     },
     separator: {
@@ -60,13 +70,14 @@ export default class ResultRow extends Component {
                     {map}
                     <View style={styles.rowContainer}>
                         <View style={{flex: 5}}>
-                            <Text style={{fontWeight: 'bold'}}>{this.props.row.attributes.SPORT}</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 16}}>{this.props.row.attributes.SPORT.toUpperCase()}</Text>
                             <Text>{this.props.row.attributes.TYPE}</Text>
-                            <Text>{this.props.row.attributes.COMMUNE}</Text>
-                            <Text>{this.props.row.attributes.NCOM}</Text>
+                            <Text>
+                                {this.props.row.attributes.COMMUNE} ({this.props.row.attributes.NCOM})
+                            </Text>
                         </View>
                         <View style={styles.icon_container}>
-                            <Icon name="favorite-border" size={23} color="#000" />
+                            <Icon name="my-location" size={23} color="#000" />
                         </View>
                     </View>
                 </View>
