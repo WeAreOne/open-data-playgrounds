@@ -1,17 +1,25 @@
 import realm from '../database/Realm';
 
 export default class MapService {
-    static URL = 'https://ge.ch/sitgags1/rest/services/VECTOR/SITG_OPENDATA_04/MapServer/6592/query?where=@where@&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=SPORT%2C+TYPE%2C+COMMUNE%2C+NCOM%2C+CODE%2C+LIEN_FICHE_DESCRIPTIVE%2C+LIEN_PHOTOS&returnGeometry=true&returnTrueCurves=true&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson';
+    static URL = 'https://ge.ch/sitgags1/rest/services/VECTOR/SITG_OPENDATA_04/MapServer/6592/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=SPORT%2C+TYPE%2C+COMMUNE%2C+NCOM%2C+CODE%2C+LIEN_FICHE_DESCRIPTIVE%2C+LIEN_PHOTOS&returnGeometry=true&returnTrueCurves=true&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson';
     static URL_SPORTS = 'https://ge.ch/sitgags1/rest/services/VECTOR/SITG_OPENDATA_04/MapServer/6592/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=SPORT&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=true&resultOffset=&resultRecordCount=&f=pjson';
     static URL_CITIES = 'https://ge.ch/sitgags1/rest/services/VECTOR/SITG_OPENDATA_04/MapServer/6592/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=COMMUNE%2C+SPORT&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=COMMUNE&outStatistics=%5B%0D%0A++%7B%0D%0A++++%22statisticType%22%3A+%22count%22%2C%0D%0A++++%22onStatisticField%22%3A+%22SPORT%22%2C%0D%0A++++%22outStatisticFieldName%22%3A+%22NBSPORT%22%0D%0A++%7D%0D%0A%5D&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson';
     static URL_TRANSFORM = 'http://geodesy.geo.admin.ch/reframe/lv95towgs84';
 
     static init() {
-        /*realm.write(() => {
-           realm.deleteAll();
-        });*/
+        realm.write(() => {
+            realm.deleteAll();
+        });
         if (!realm.objects('Playground').length) {
-            this.getAll().then(res => {
+            return Promise.all([this._initPlaygrounds, this._initCity, this._initSport]);
+        } else {
+            return Promise.resolve(0);
+        }
+    }
+
+    _initPlaygrounds() {
+        return new Promise(resolve => {
+            fetch(this.URL).then(res => res.json()).then(res => {
                 realm.write(() => {
                     res.features.forEach(p => {
                         realm.create('Playground', {
@@ -25,10 +33,14 @@ export default class MapService {
                             y: +p.geometry.y,
                         })
                     })
-                })
+                });
+                resolve();
             });
-        }
-        if (!realm.objects('City').length) {
+        })
+    };
+
+    _initCity() {
+        return new Promise(resolve => {
             fetch(this.URL_CITIES).then(res => res.json()).then(res => {
                 realm.write(() => {
                     res.features.forEach(c => {
@@ -37,10 +49,14 @@ export default class MapService {
                             nbSport: c.attributes.NBSPORT,
                         })
                     })
-                })
+                });
+                resolve();
             });
-        }
-        if(!realm.objects('Sport').length) {
+        });
+    };
+
+    _initSport() {
+        return new Promise(resolve => {
             fetch(this.URL_SPORTS).then(res => res.json()).then(res => {
                 realm.write(() => {
                     res.features.forEach(s => {
@@ -49,16 +65,13 @@ export default class MapService {
                         })
                     })
                 })
+                resolve();
             });
-        }
-    }
+        });
+    };
 
-    static getAll() {
-        let allUrl = this.URL.replace(/@where@/g, '1=1');
-        return fetch(allUrl).then(res => res.json());
-    }
     static getBySport(pSport) {
-        return Promise.resolve(realm.objects('Playground').filtered(`sport == "${pSport}"`));
+        return Promise.resolve(realm.objects('Playground').filtered(`sport ==[c] "${pSport}"`));
     }
     static getByCity(pCity) {
         return Promise.resolve(realm.objects('Playground').filtered(`commune == "${pCity}"`));
