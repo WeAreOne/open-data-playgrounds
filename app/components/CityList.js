@@ -62,16 +62,12 @@ export default class CityList extends Component {
         super();
         this.state = {
             showLoader: true,
+            filter: '',
             cities: []
         }
     }
     componentWillMount() {
-        MapService.getAllCity().then(res => {
-           let cities = res.features.map(c => {
-               return {name: c.attributes.COMMUNE, nbSport: c.attributes.NBSPORT};
-           }).sort((a,b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1) ;
-           this.setState({showLoader: false, cities})
-        });
+        MapService.getAllCity().then( cities =>  this.setState({showLoader: false, cities: cities.sorted('name')}));
     }
     _goToCityDetail(city) {
         Actions.cityDetail({data: city, title: city.name.toUpperCase()})
@@ -79,7 +75,7 @@ export default class CityList extends Component {
     render() {
         let cities = this.state.cities;
         if(this.state.filter) {
-            cities = cities.filter(c => c.name.toLowerCase().startsWith(this.state.filter.toLowerCase()));
+            cities = cities.filtered(`name BEGINSWITH[c] "${this.state.filter}"`);
         }
         return (
             <ScrollView style={styles.page}>

@@ -9,6 +9,7 @@ import CityList from './CityList';
 import CityDetail from './CityDetail';
 import ResultList from './ResultList';
 import ResultDetail from './ResultDetail';
+import MapService from '../services/MapService';
 
 
 const styles = StyleSheet.create({
@@ -24,6 +25,10 @@ const styles = StyleSheet.create({
     }
 })
 export default class RouterComponent extends Component{
+    constructor() {
+        super();
+        MapService.init();
+    }
     render(){
         return (
             <Router>

@@ -43,7 +43,7 @@ export default class ResultDetail extends Component {
         }
     }
     componentWillMount() {
-        MapService.transform(this.props.data.geometry).then(point => this.setState({point}));
+        MapService.transform(this.props.data).then(point => this.setState({point}));
     }
     render() {
         let map = this.state.point.easting ? (<CoordinateMap point={this.state.point} />) : (<View></View>);
@@ -57,12 +57,12 @@ export default class ResultDetail extends Component {
                 </View>
                 <View style={styles.container}>
                     <View>
-                        <Text>{this.props.data.attributes.SPORT}</Text>
-                        <Text>{this.props.data.attributes.COMMUNE}</Text>
-                        <Text>{this.props.data.attributes.TYPE}</Text>
-                        <Text>{this.props.data.attributes.NCOM}</Text>
-                        <Text>{this.props.data.attributes.LIEN_FICHE_DESCRIPTIVE}</Text>
-                        <Text>{this.props.data.attributes.LIEN_PHOTOS}</Text>
+                        <Text>{this.props.data.sport}</Text>
+                        <Text>{this.props.data.commune}</Text>
+                        <Text>{this.props.data.type}</Text>
+                        <Text>{this.props.data.ncom}</Text>
+                        <Text>{this.props.data.lienFicheDesc}</Text>
+                        <Text>{this.props.data.lienPhotos}</Text>
                     </View>
 
                     <Separator />

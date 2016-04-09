@@ -23,7 +23,7 @@ export default class CityDetail extends Component {
     componentWillMount() {
         MapService.getByCity(this.props.data.name).then(res => {
             this.setState({
-                results: res.features,
+                results: res,
                 showLoader: false
             });
         });

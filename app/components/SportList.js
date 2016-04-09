@@ -68,12 +68,7 @@ export default class SportList extends Component {
         ];
     }
     componentWillMount() {
-        MapService.getAllSport().then(res => {
-            let sports = res.features.map(feature => {
-                return {name: feature.attributes.SPORT}
-            });
-            this.setState({showLoader: false, sports});
-        })
+        MapService.getAllSport().then(sports =>  this.setState({showLoader: false, sports}))
     }
     _result(sport) {
         Actions.resultList({data: sport, title: sport.name})

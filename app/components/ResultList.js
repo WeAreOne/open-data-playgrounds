@@ -16,17 +16,15 @@ export default class ResultList extends Component {
         super();
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            results: [],
             showLoader: true
         };
     }
     componentDidMount() {
         MapService.getBySport(this.props.data.name).then(
             results => {
-                let dataSource = this.ds.cloneWithRows(results.features);
+                let dataSource = this.ds.cloneWithRows(results);
                 this.setState(
                     {
-                        results: results.features,
                         showLoader: false,
                         dataSource
                     });

@@ -56,11 +56,10 @@ export default class ResultRow extends Component {
         }
     }
     componentWillMount() {
-        console.log(this.props.row);
-        MapService.transform(this.props.row.geometry).then(point => this.setState({point}));
+        MapService.transform(this.props.row).then(point => this.setState({point}));
     }
     _resultDetail(row) {
-        Actions.resultDetail({data: row, title: row.attributes.COMMUNE});
+        Actions.resultDetail({data: row, title: row.commune});
     }
     render() {
         let map = this.state.point.northing ? (<View style={styles.map}><CoordinateMap point={this.state.point} /></View>) : (<View />);
@@ -70,10 +69,10 @@ export default class ResultRow extends Component {
                     {map}
                     <View style={styles.rowContainer}>
                         <View style={{flex: 5}}>
-                            <Text style={{fontWeight: 'bold', fontSize: 16}}>{this.props.row.attributes.SPORT.toUpperCase()}</Text>
-                            <Text>{this.props.row.attributes.TYPE}</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 16}}>{this.props.row.sport.toUpperCase()}</Text>
+                            <Text>{this.props.row.type}</Text>
                             <Text>
-                                {this.props.row.attributes.COMMUNE} ({this.props.row.attributes.NCOM})
+                                {this.props.row.commune} ({this.props.row.ncom})
                             </Text>
                         </View>
                         <View style={styles.icon_container}>
