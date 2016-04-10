@@ -27,7 +27,9 @@ const styles = StyleSheet.create({
 export default class RouterComponent extends Component{
     constructor() {
         super();
-        MapService.init();
+        MapService.init().then( () => {
+            console.log('>>>>>>>>>>>>>>> end');
+        });
     }
     render(){
         return (
