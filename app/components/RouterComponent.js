@@ -1,6 +1,7 @@
 import React, {Component, View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import {Scene, Router, Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 // App
@@ -44,8 +45,13 @@ const styles = StyleSheet.create({
 export default class RouterComponent extends Component{
     constructor() {
         super();
+        this.state = {
+            isLoading: true
+        };
+    }
+    componentWillMount() {
         MapService.init().then( () => {
-            console.log('>>>>>>>>>>>>>>> end');
+            this.setState({isLoading: false});
         });
     }
     _options(){
@@ -60,7 +66,7 @@ export default class RouterComponent extends Component{
         );
     }
     render(){
-        return (
+        var router =  (
             <Router>
                 <Scene key="root" navigationBarStyle={styles.navBar} renderRightButton={this._hamburger.bind(this)}>
                     <Scene key="sportCity" component={SportCity} initial={true} hideNavBar={true} title="App"/>
@@ -72,6 +78,10 @@ export default class RouterComponent extends Component{
                     <Scene key="drawer" title="ODPlayground" component={SideBar} direction="vertical"/>
                 </Scene>
             </Router>
-        )
+        );
+        var loading = (<Spinner visible={true} color="red" />);
+        var comp = this.state.isLoading ? loading : router;
+
+        return  comp;
     }
 }
