@@ -8,14 +8,18 @@ export default class MapService {
 
     static init() {
         let service = new MapService();
-        /*realm.write(() => {
-            realm.deleteAll();
-        });*/
+
         if (!realm.objects('Playground').length) {
             return service._initPlaygrounds().then(() => { return service._initSport()}).then(() => {return service._initCity()});
         } else {
             return Promise.resolve(0);
         }
+    }
+
+    static emptyDb() {
+       realm.write(() => {
+            realm.deleteAll();
+       });
     }
 
     _initPlaygrounds() {
