@@ -15,7 +15,7 @@ import SideBar from './SideBar';
 
 // Service
 import MapService from '../services/MapService';
-
+import UserService from '../services/UserService';
 
 const styles = StyleSheet.create({
     navBar: {
@@ -50,6 +50,7 @@ export default class RouterComponent extends Component{
         };
     }
     componentWillMount() {
+        UserService.auth();
         MapService.init().then( () => {
             this.setState({isLoading: false});
         });
