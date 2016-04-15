@@ -1,5 +1,8 @@
 import React, {Component, StyleSheet, View, ScrollView, TouchableHighlight, Text} from 'react-native';
+
+// App
 import UserService from '../services/UserService';
+import LoginForm from './LoginForm';
 
 const styles = StyleSheet.create({
     page: {
@@ -12,28 +15,45 @@ export default class SideBar extends Component {
         super();
 
         this.state = {
+            loggedIn: false
         };
     }
+    componentWillMount() {
+        let loggedIn = UserService.isAuth();
+        this.setState({loggedIn});
+    }
     _login() {
-        UserService.login().then(userData => console.log(userData));
+        UserService.login().then(userData => {
+            console.log(userData);
+            this.setState({loggedIn: true})
+        });
+    }
+    _createAccount() {
+
     }
     _logout() {
         UserService.logout();
+        this.setState({loggedIn: false});
     }
     render() {
-        let isAuth = UserService.isAuth();
+        let userData = this.state.loggedIn ? UserService.getUser() : {};
 
         return (
             <View style={styles.page}>
                 <Text>Sidebar</Text>
-                <Text>User is auth : {isAuth ? 'Logged' : 'Not logged'}</Text>
-                <TouchableHighlight onPress={this._login.bind(this)}>
-                    <Text>Log me in</Text>
-                </TouchableHighlight>
-
-                <TouchableHighlight onPress={this._logout.bind(this)}>
-                    <Text>Log me out</Text>
-                </TouchableHighlight>
+                <Text>User is auth : {this.state.loggedIn ? 'Logged' : 'Not logged'}</Text>
+                <Text>{!!userData ? userData.userEmail: ''}</Text>
+                {
+                    !this.state.loggedIn ?
+                        (
+                           <LoginForm login={this._login.bind(this)} createAccount={this._createAccount.bind(this)}/>
+                        ) :
+                        (
+                            <TouchableHighlight onPress={this._logout.bind(this)}>
+                                <Text>Log me out</Text>
+                            </TouchableHighlight>
+                        )
+                }
             </View>
         )
     }

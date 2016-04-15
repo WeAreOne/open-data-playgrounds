@@ -8,10 +8,14 @@ export default class UserService {
     static auth() {
         let auth = realm.objects('Auth');
         if (auth.length) {
-            this._ref.authWithCustomToken(auth[0].token, (error, authData) => {
+            this._ref.authWithCustomToken(auth[0].token, (error) => {
                 if (error) console.log(error);
             })
         }
+    }
+
+    static getUser() {
+        return realm.objects('Auth')[0];
     }
 
     static isAuth() {
@@ -30,7 +34,9 @@ export default class UserService {
                 } else {
                     realm.write(() => {
                         realm.create('Auth', {
-                            token: authData.token
+                            token: authData.token,
+                            userEmail: authData.password.email,
+                            userPhoto: authData.password.profileImageURL
                         })
                     });
                     resolve(authData);

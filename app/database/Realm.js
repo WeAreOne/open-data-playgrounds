@@ -33,7 +33,9 @@ const PlaygroundSchema = {
 const AuthSchema = {
     name: 'Auth',
     properties: {
-        token: 'string'
+        token: 'string',
+        userEmail: 'string',
+        userPhoto: 'string'
     }
 }
 export default new Realm({schema: [SportSchema, CitySchema, PlaygroundSchema, AuthSchema]});
