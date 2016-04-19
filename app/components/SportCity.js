@@ -21,22 +21,27 @@ const styles = StyleSheet.create({
         width: dim.width
     },
     categoryTextWrapper: {
-        borderBottomWidth: 2,
-        borderBottomColor: 'black',
+        borderWidth: 2,
+        borderColor: 'black',
         position: 'absolute',
-        top: dim.height / 4 - 25,
+        top: dim.height / 4 - 37,
         left: 50,
         width: 250,
-        paddingTop: 20,
-        paddingBottom: 20
+        paddingTop: 10,
+        paddingBottom: 10
     },
     categoryText: {
         color: 'black',
-        backgroundColor: '#00000000',
+        backgroundColor: 'transparent',
         width: 250,
         textAlign: 'center',
         fontSize: 25,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+    },
+    search_container: {flex: 0.3, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white'},
+    var_text: {
+        fontWeight: 'bold',
+        color: '#2196F3'
     }
 });
 
@@ -86,13 +91,15 @@ export default class SportCity extends Component {
                     </View>
                 </TouchableOpacity>
 
-                <View style={{flex: 0.3, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white'}}>
+                <View style={styles.search_container}>
                     <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity onPress={this._clearSearch.bind(this)}>
                             <Icon name="times" backgroundColor="#FFF" color="#000" size={17} style={{marginRight: 10}}/>
                         </TouchableOpacity>
                         <Text  style={{marginBottom: 7}}>
-                            <Text style={{fontWeight: 'bold'}}> {sport} </Text> in <Text style={{fontWeight: 'bold'}}>{city}</Text>
+                            <Text style={styles.var_text}> {sport} </Text>
+                            in
+                            <Text style={styles.var_text}> {city} </Text>
                         </Text>
                     </View>
                     <Icon.Button name="search" borderRadius={0} backgroundColor="#FFF" color="#000" style={{borderWidth: 2, borderColor: 'black'}} onPress={this._search}>
