@@ -76,7 +76,7 @@ export default class MapService {
     };
 
     static getBySport(pSport) {
-        return Promise.resolve(realm.objects('Playground').filtered(`sport ==[c] "${pSport}"`));
+        return Promise.resolve(realm.objects('Playground').filtered(`sport ==[c] "${pSport}"`).slice(0, 10));
     }
     static getByCity(pCity) {
         return Promise.resolve(realm.objects('Playground').filtered(`commune == "${pCity}"`));

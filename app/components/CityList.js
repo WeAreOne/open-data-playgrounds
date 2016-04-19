@@ -11,9 +11,7 @@ import MapService from '../services/MapService';
 import Separator from './Separator';
 
 const styles = StyleSheet.create({
-   page: {
-       paddingTop: 65
-   },
+   page: {flex: 1, paddingTop: 65},
     separator: {
         height: 1,
         backgroundColor: 'black',
@@ -31,14 +29,19 @@ const styles = StyleSheet.create({
         flex: 1,
         borderWidth: 1,
         borderRadius: 5,
-        margin: 2
+        margin: 2,
+        backgroundColor: 'transparent',
+        borderColor: 'white',
     },
     filterText: {
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        color: 'white'
     },
     filterActive: {
-        backgroundColor: 'black'
+        backgroundColor: 'black',
+        borderColor: 'black',
+
     },
     filterTextActive: {
         color: 'white'
@@ -48,12 +51,32 @@ const styles = StyleSheet.create({
         borderBottomColor: 'gray',
         borderBottomWidth: 1,
         marginBottom: 10,
-        padding: 5
+        padding: 5,
+        color: 'white'
     },
     row: {
         flex:1,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 60
+    },
+    city_name: {
+        color: 'white',
+        fontWeight: '300',
+        fontSize: 20
+    },
+    background: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        resizeMode: 'contain'
+    },
+    number: {
+        fontWeight: '300',
+        color: 'white',
+        fontSize: 25
     }
 });
 
@@ -78,7 +101,9 @@ export default class CityList extends Component {
             cities = cities.filtered(`name BEGINSWITH[c] "${this.state.filter}"`);
         }
         return (
-            <ScrollView style={styles.page}>
+            <View style={styles.page}>
+                <Image source={require('../../assets/city-bg-portrait.jpeg')} style={styles.background}/>
+
                 <Spinner visible={this.state.showLoader} color="red" />
                 <TextInput
                     style={styles.input}
@@ -88,7 +113,7 @@ export default class CityList extends Component {
                 />
                 <Separator />
 
-                <View style={{flex: 1, flexDirection: 'row', marginBottom: 10}}>
+                <View style={{height: 25, flexDirection: 'row', marginBottom: 10}}>
                     <TouchableOpacity style={[styles.filter, styles.filterActive]}>
                         <Text style={[styles.filterText, styles.filterTextActive]}>All</Text>
                     </TouchableOpacity>
@@ -97,31 +122,39 @@ export default class CityList extends Component {
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.resultList}>
-                {
-                    cities.map((c,i) => {
-                        return (
-                            <View key={i} style={{flex: 1}}>
-                                <TouchableHighlight style={{flex: 1}} onPress={this._goToCityDetail.bind(this, c)}>
-                                    <View style={styles.row}>
+                <ScrollView>
+                    <View style={styles.resultList}>
+                    {
+                        cities.map((c,i) => {
+                            return (
+                                <View key={i} style={{flex: 1}}>
+                                    <TouchableHighlight style={{flex: 1}} onPress={this._goToCityDetail.bind(this, c)}>
                                         <View style={styles.row}>
-                                            <Image source={require('../../assets/city-icon.png')} style={{width: 45, height: 45, margin: 5, resizeMode:'stretch', marginRight: 5}}/>
-                                            <Text style={{fontSize: 13}}>{c.name.toUpperCase()}</Text>
+                                            <View style={styles.row}>
+                                                <Text style={styles.city_name}>
+                                                    {c.name.toUpperCase()}
+                                                </Text>
+                                            </View>
+                                            <View style={[styles.row, {justifyContent: 'flex-end'}]}>
+                                                <Text>
+                                                    <Text style={styles.number}>{c.nbSport}</Text>
+                                                    <Icon name="place" color="white" size={20}/>
+                                                </Text>
+                                                <Text>
+                                                    <Text style={styles.number}>0</Text>
+                                                    <Icon name="favorite" color="white" size={20}/>
+                                                </Text>
+                                            </View>
                                         </View>
-                                        <View style={[styles.row, {justifyContent: 'flex-end'}]}>
-                                            <Text>
-                                                <Text style={{fontWeight: 'bold'}}>{c.nbSport}</Text> PLAYGROUNDS
-                                            </Text>
-                                            <Icon name="favorite-border" color="black" size={25}/>
-                                        </View>
-                                    </View>
-                                </TouchableHighlight>
-                            </View>
-                        )
-                    })
-                }
-                </View>
-            </ScrollView>
+                                    </TouchableHighlight>
+                                    <View style={{height:1, backgroundColor: '#FFFFFF90'}}></View>
+                                </View>
+                            )
+                        })
+                    }
+                    </View>
+                </ScrollView>
+            </View>
         )
     }
 }

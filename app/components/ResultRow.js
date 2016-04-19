@@ -8,15 +8,6 @@ import CoordinateMap from './CoordinateMap';
 
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 2,
-        borderColor: '#DDD',
-        shadowColor: '#DDD',
-        shadowOpacity: 0.8,
-        shadowOffset: {
-            width: 2,
-            height: 2
-        },
-        elevation: 2,
         margin: 10,
         marginBottom: 20,
         flex: 1
@@ -26,11 +17,12 @@ const styles = StyleSheet.create({
         flex: 1
     },
     rowContainer: {
-        backgroundColor: 'white',
+        backgroundColor: '#00000050',
         flexDirection: 'row',
         justifyContent: 'center',
         padding: 5,
-        flex: 1
+        flex: 1,
+        
     },
     separator: {
         marginTop: 5,
@@ -69,14 +61,14 @@ export default class ResultRow extends Component {
                     {map}
                     <View style={styles.rowContainer}>
                         <View style={{flex: 5}}>
-                            <Text style={{fontWeight: 'bold', fontSize: 16}}>{this.props.row.sport.toUpperCase()}</Text>
-                            <Text>{this.props.row.type}</Text>
-                            <Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 16, color: 'white'}}>{this.props.row.sport.toUpperCase()}</Text>
+                            <Text style={{color: 'white'}}>{this.props.row.type}</Text>
+                            <Text style={{color: 'white'}}>
                                 {this.props.row.commune} ({this.props.row.ncom})
                             </Text>
                         </View>
                         <View style={styles.icon_container}>
-                            <Icon name="my-location" size={23} color="#000" />
+                            <Icon name="my-location" size={23} color="white" />
                         </View>
                     </View>
                 </View>

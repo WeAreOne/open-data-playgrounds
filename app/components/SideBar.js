@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     page: {
         paddingTop: 65
     }
-})
+});
 
 export default class SideBar extends Component {
     constructor () {

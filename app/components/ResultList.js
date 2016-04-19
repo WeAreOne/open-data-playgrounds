@@ -1,4 +1,4 @@
-import React, {Component, StyleSheet, View, ListView, ScrollView, TouchableHighlight, Text} from 'react-native';
+import React, {Component, StyleSheet, View, ListView, ScrollView, TouchableHighlight, Text, Image} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 //App
@@ -9,7 +9,15 @@ const styles = StyleSheet.create({
     page: {
         paddingTop: 65,
         flex: 1
-    }
+    },
+    background: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        resizeMode: 'contain'
+    },
 });
 export default class ResultList extends Component {
     constructor() {
@@ -37,11 +45,17 @@ export default class ResultList extends Component {
                 dataSource={this.state.dataSource}
                 renderRow={(rowData) => <ResultRow row={rowData}/>}
                 pageSize={5}
+                renderFooter={() => {
+                    return (
+                        <Text>Show me more</Text>
+                    );
+                }}
             />
         ): (<View></View>);
         return (
             <View style={styles.page}>
                 <Spinner visible={this.state.showLoader} color="red"/>
+                <Image source={require('../../assets/city-bg-portrait.jpeg')} style={styles.background}/>
                 {list}
             </View>
         )

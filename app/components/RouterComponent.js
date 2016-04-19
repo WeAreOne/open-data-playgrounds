@@ -34,12 +34,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'flex-end',
         paddingTop: 10
-    },
-    menu_icon_android: {
-         alignSelf: 'flex-end',
-         justifyContent: 'center',
-         paddingTop: 20,
-         paddingRight: 10,
     }
 })
 export default class RouterComponent extends Component{
@@ -69,13 +63,13 @@ export default class RouterComponent extends Component{
     render(){
         var router =  (
             <Router>
-                <Scene key="root" navigationBarStyle={styles.navBar} renderRightButton={this._hamburger.bind(this)}>
+                <Scene key="root" navigationBarStyle={styles.navBar}>
                     <Scene key="sportCity" component={SportCity} initial={true} hideNavBar={true} title="App"/>
-                    <Scene key="sportList" component={SportList} title="Choose a sport" background="sports.jpg"/>
-                    <Scene key="cityList" component={CityList} title="Choose a city"/>
-                    <Scene key="cityDetail" component={CityDetail} title="City Detail"/>
-                    <Scene key="resultList" component={ResultList} title="Result List"/>
-                    <Scene key="resultDetail" component={ResultDetail} title="Result Detail"/>
+                    <Scene key="sportList" component={SportList} title="Choose a sport" renderRightButton={this._hamburger.bind(this)}/>
+                    <Scene key="cityList" component={CityList} title="Choose a city" renderRightButton={this._hamburger.bind(this)}/>
+                    <Scene key="cityDetail" component={CityDetail} title="City Detail" renderRightButton={this._hamburger.bind(this)}/>
+                    <Scene key="resultList" component={ResultList} title="Result List" renderRightButton={this._hamburger.bind(this)}/>
+                    <Scene key="resultDetail" component={ResultDetail} title="Result Detail" renderRightButton={this._hamburger.bind(this)}/>
                     <Scene key="drawer" title="ODPlayground" component={SideBar} direction="vertical"/>
                 </Scene>
             </Router>
