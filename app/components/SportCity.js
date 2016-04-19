@@ -25,15 +25,15 @@ const styles = StyleSheet.create({
         borderBottomColor: 'black',
         position: 'absolute',
         top: dim.height / 4 - 25,
-        left: 100,
-        width: 150,
+        left: 50,
+        width: 250,
         paddingTop: 20,
         paddingBottom: 20
     },
     categoryText: {
         color: 'black',
         backgroundColor: '#00000000',
-        width: 150,
+        width: 250,
         textAlign: 'center',
         fontSize: 25,
         fontWeight: 'bold'
@@ -72,10 +72,20 @@ export default class SportCity extends Component {
                     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
                         <Image source={require('../../assets/sport.jpeg')} style={styles.category}/>
                         <View style={styles.categoryTextWrapper}>
-                            <Text style={[styles.categoryText]}>Sports</Text>
+                            <Text style={[styles.categoryText]}>Select a sport</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
+
+                <TouchableOpacity onPress={this._goToCities.bind(this)} style={{flex: 1}}>
+                    <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+                        <Image source={require('../../assets/city.jpeg')} style={styles.category}/>
+                        <View style={styles.categoryTextWrapper}>
+                            <Text style={[styles.categoryText]}>Select a city</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+
                 <View style={{flex: 0.3, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white'}}>
                     <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity onPress={this._clearSearch.bind(this)}>
@@ -89,14 +99,6 @@ export default class SportCity extends Component {
                         Search
                     </Icon.Button>
                 </View>
-                <TouchableOpacity onPress={this._goToCities.bind(this)} style={{flex: 1}}>
-                    <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
-                        <Image source={require('../../assets/city.jpeg')} style={styles.category}/>
-                        <View style={styles.categoryTextWrapper}>
-                            <Text style={[styles.categoryText]}>Cities</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
             </View>
         )
     }
