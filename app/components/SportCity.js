@@ -65,7 +65,7 @@ export default class SportCity extends Component {
     render() {
         let city = SearchService.search.city.name.toUpperCase();
         let sport = SearchService.search.sport.name.toUpperCase();
-        
+
         return (
             <View style={styles.page}>
                 <TouchableOpacity onPress={this._goToSportList.bind(this)} style={{flex: 1}}>
@@ -85,7 +85,7 @@ export default class SportCity extends Component {
                             <Text style={{fontWeight: 'bold'}}> {sport} </Text> in <Text style={{fontWeight: 'bold'}}>{city}</Text>
                         </Text>
                     </View>
-                    <Icon.Button name="search" borderRadius={0} backgroundColor="#0009" onPress={this._search}>
+                    <Icon.Button name="search" borderRadius={0} backgroundColor="#FFF" color="#000" style={{borderWidth: 2, borderColor: 'black'}} onPress={this._search}>
                         Search
                     </Icon.Button>
                 </View>

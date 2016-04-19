@@ -70,7 +70,7 @@ export default class RouterComponent extends Component{
                     <Scene key="cityList" component={CityList} title="Choose a city" renderRightButton={this._hamburger.bind(this)}/>
                     <Scene key="resultList" component={ResultList} title="Result List" renderRightButton={this._hamburger.bind(this)}/>
                     <Scene key="resultDetail" component={ResultDetail} title="Result Detail" renderRightButton={this._hamburger.bind(this)}/>
-                    <Scene key="drawer" title="ODPlayground" component={SideBar} direction="vertical"/>
+                    <Scene key="drawer" title="Sign in / Sign Up" component={SideBar} direction="vertical"/>
                 </Scene>
             </Router>
         );
