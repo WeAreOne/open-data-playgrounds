@@ -22,14 +22,15 @@ export default class SideBar extends Component {
         let loggedIn = UserService.isAuth();
         this.setState({loggedIn});
     }
-    _login() {
-        UserService.login().then(userData => {
-            console.log(userData);
+    _login(username, password) {
+        UserService.login(username, password).then(() => {
             this.setState({loggedIn: true})
         });
     }
-    _createAccount() {
-
+    _createAccount(username, password) {
+        UserService.createAccount(username, password).then(() => {
+            this.setState({loggedIn: true})
+        });
     }
     _logout() {
         UserService.logout();

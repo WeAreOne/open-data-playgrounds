@@ -22,17 +22,18 @@ export default class UserService {
         return this._ref.getAuth();
     }
 
-    static login() {
+    static login(username, password) {
         return new Promise((resolve, reject) => {
             this._ref.authWithPassword({
-                email    : "florian@weareone.ch",
-                password : "theflop04"
+                email    : username,
+                password : password
             },
             function(error, authData) {
                 if (error) {
                     reject(error)
                 } else {
                     realm.write(() => {
+                        realm.delete(realm.objects('Auth'));
                         realm.create('Auth', {
                             token: authData.token,
                             userEmail: authData.password.email,
@@ -40,6 +41,22 @@ export default class UserService {
                         })
                     });
                     resolve(authData);
+                }
+            })
+        })
+    }
+    static createAccount(username, password) {
+        return new Promise((resolve, reject) => {
+            this._ref.createUser({
+                email: username,
+                password
+            },
+            err => {
+                if (err) reject(err);
+                else {
+                    this.login(username, password).then(userData => {
+                        resolve(userData);
+                    })
                 }
             })
         })

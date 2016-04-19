@@ -8,6 +8,12 @@ export default class LoginForm extends Component {
             password: ''
         }
     }
+    _login() {
+        this.props.login(this.state.username, this.state.password);
+    }
+    _createAccount() {
+        this.props.createAccount(this.state.username, this.state.password);
+    }
     render() {
         return (
             <View>
@@ -26,14 +32,15 @@ export default class LoginForm extends Component {
                         style={{height: 40, flex: 1,borderColor: 'gray', borderWidth: 1}}
                         onChangeText={(password) => this.setState({password})}
                         value={this.state.password}
+                        secureTextEntry={true}
                     />
                 </View>
 
                 <View style={{flexDirection: 'row', flex: 1}}>
-                    <TouchableHighlight onPress={this.props.login} style={{flex: 1}}>
+                    <TouchableHighlight onPress={this._login.bind(this)} style={{flex: 1}}>
                         <Text>Log me in</Text>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={this.props.createAccount} style={{flex: 1}}>
+                    <TouchableHighlight onPress={this._createAccount.bind(this)} style={{flex: 1}}>
                         <Text>Create account</Text>
                     </TouchableHighlight>
                 </View>
