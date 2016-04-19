@@ -8,10 +8,10 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import SportCity from './SportCity';
 import SportList from './SportList';
 import CityList from './CityList';
-import CityDetail from './CityDetail';
 import ResultList from './ResultList';
 import ResultDetail from './ResultDetail';
 import SideBar from './SideBar';
+import Dashboard from './Dashboard';
 
 // Service
 import MapService from '../services/MapService';
@@ -19,7 +19,7 @@ import UserService from '../services/UserService';
 
 const styles = StyleSheet.create({
     navBar: {
-        backgroundColor:'#FFF',
+        backgroundColor:'white',
         shadowColor: '#555',
         shadowOpacity: 0.8,
         shadowOffset : {
@@ -64,10 +64,10 @@ export default class RouterComponent extends Component{
         var router =  (
             <Router>
                 <Scene key="root" navigationBarStyle={styles.navBar}>
-                    <Scene key="sportCity" component={SportCity} initial={true} hideNavBar={true} title="App"/>
+                    <Scene key="dashboard" component={Dashboard} initial={true} hideNavBar={true} title="App"/>
+                    <Scene key="sportCity" component={SportCity} title="Find a playground" renderRightButton={this._hamburger.bind(this)}/>
                     <Scene key="sportList" component={SportList} title="Choose a sport" renderRightButton={this._hamburger.bind(this)}/>
                     <Scene key="cityList" component={CityList} title="Choose a city" renderRightButton={this._hamburger.bind(this)}/>
-                    <Scene key="cityDetail" component={CityDetail} title="City Detail" renderRightButton={this._hamburger.bind(this)}/>
                     <Scene key="resultList" component={ResultList} title="Result List" renderRightButton={this._hamburger.bind(this)}/>
                     <Scene key="resultDetail" component={ResultDetail} title="Result Detail" renderRightButton={this._hamburger.bind(this)}/>
                     <Scene key="drawer" title="ODPlayground" component={SideBar} direction="vertical"/>

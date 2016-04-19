@@ -5,7 +5,8 @@ const styles = StyleSheet.create({
         height: 1,
         backgroundColor:  'black',
         marginTop: 5,
-        marginBottom: 5
+        marginBottom: 5,
+        opacity: 0.7
     }
 })
 export default class Separator extends Component {

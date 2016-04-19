@@ -3,6 +3,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 //App
 import MapService from '../services/MapService';
+import SearchService from '../services/SearchService';
 import ResultRow from './ResultRow';
 
 const styles = StyleSheet.create({
@@ -27,8 +28,10 @@ export default class ResultList extends Component {
             showLoader: true
         };
     }
+   
     componentDidMount() {
-        MapService.getBySport(this.props.data.name).then(
+        let search = SearchService.search;
+        MapService.search(search).then(
             results => {
                 let dataSource = this.ds.cloneWithRows(results);
                 this.setState(

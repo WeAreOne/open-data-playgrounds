@@ -5,6 +5,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 //APP
 import MapService from '../services/MapService';
 import PictureService from '../services/PictureService';
+import SearchService from '../services/SearchService';
 
 const dim = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -71,7 +72,8 @@ export default class SportList extends Component {
         MapService.getAllSport().then(sports =>  this.setState({showLoader: false, sports}))
     }
     _result(sport) {
-        Actions.resultList({data: sport, title: sport.name})
+        SearchService.setSport(sport);
+        Actions.pop();
     }
     _getPicture(sport) {
         return PictureService.getPicture(sport)

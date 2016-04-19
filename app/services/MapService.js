@@ -75,17 +75,24 @@ export default class MapService {
         });
     };
 
-    static getBySport(pSport) {
-        return Promise.resolve(realm.objects('Playground').filtered(`sport ==[c] "${pSport}"`).slice(0, 10));
-    }
-    static getByCity(pCity) {
-        return Promise.resolve(realm.objects('Playground').filtered(`commune == "${pCity}"`));
+    static countSport() {
+        return realm.objects('Playground').length;
     }
     static getAllSport() {
         return Promise.resolve(realm.objects('Sport'));
     }
     static getAllCity() {
         return Promise.resolve(realm.objects('City'));
+    }
+    static search(search) {
+        let playgrounds = realm.objects('Playground');
+        if (search.city.name !== 'ANY CITY') {
+            playgrounds = playgrounds.filtered(`commune ==[c] "${search.city.name}"`)
+        }
+        if (search.sport.name !== 'ANY SPORT') {
+            playgrounds = playgrounds.filtered(`sport ==[c] "${search.sport.name}"`)
+        }
+        return Promise.resolve(playgrounds);
     }
     static transform(point) {
         return fetch(this.URL_TRANSFORM+`?easting=${point.x}&northing=${point.y}&format=json`)

@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 //App
 import MapService from '../services/MapService';
+import SearchService from '../services/SearchService';
 import Separator from './Separator';
 
 const styles = StyleSheet.create({
@@ -93,7 +94,8 @@ export default class CityList extends Component {
         MapService.getAllCity().then( cities =>  this.setState({showLoader: false, cities: cities.sorted('name')}));
     }
     _goToCityDetail(city) {
-        Actions.cityDetail({data: city, title: city.name.toUpperCase()})
+        SearchService.setCity(city);
+        Actions.pop();
     }
     render() {
         let cities = this.state.cities;
