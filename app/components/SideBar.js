@@ -1,4 +1,4 @@
-import React, {Component, StyleSheet, View, ScrollView, TouchableHighlight, Text, Image} from 'react-native';
+import React, {Component, StyleSheet, View, ScrollView, TouchableHighlight, Text, Image, Platform} from 'react-native';
 
 // App
 import UserService from '../services/UserService';
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 25,
         fontWeight: '100',
+        fontFamily: Platform.OS === 'android' ? 'sans-serif-thin' : undefined,
         padding: 15
     },
     logout: {
@@ -37,7 +38,8 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         fontSize: 20,
-        fontWeight: '300'
+        fontWeight: '300',
+        fontFamily: Platform.OS === 'android' ? 'sans-serif-light' : undefined,
     }
 });
 

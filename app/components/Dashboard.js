@@ -1,4 +1,4 @@
-import React, {Component, StyleSheet, View, ListView, ScrollView, TouchableHighlight, Text, Image} from 'react-native';
+import React, {Component, StyleSheet, View, ListView, ScrollView, TouchableHighlight, Text, Image, Platform} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 
 // App
@@ -47,11 +47,13 @@ const styles = StyleSheet.create({
     number: {
         fontSize: 35,
         fontWeight: '300',
+        fontFamily: Platform.OS === 'android' ? 'sans-serif-light' : undefined,
         color: 'white'
     },
     text: {
         fontSize: 20,
         fontWeight: '100',
+        fontFamily: Platform.OS === 'android' ? 'sans-serif-thin' : undefined,
         color: 'white'
     }
 })
@@ -71,7 +73,7 @@ export default class Dashboard extends Component {
         if (user) {
             userView = (
                 <View style={{flexDirection: 'row',alignItems: 'center'}}>
-                    <Image source={{uri: user.userPhoto}} style={{width: 100, height: 100, margin: 7, borderRadius: 50, borderColor: 'black', borderWidth: 2}}/>
+                    <Image source={{uri: user.userPhoto}} style={{width: 100, height: 100, margin: 7, borderRadius: 50, borderColor: 'white', borderWidth: 1}}/>
                     <Text style={styles.text}>{user.userEmail}</Text>
                 </View>
             )

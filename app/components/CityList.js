@@ -1,7 +1,7 @@
 import React, {
     Component, StyleSheet, View, ScrollView, ListView, Text,
     TextInput, Dimensions, TouchableHighlight, TouchableOpacity,
-    Image} from 'react-native';
+    Image, Platform} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     city_name: {
         color: 'white',
         fontWeight: '300',
+        fontFamily: Platform.OS === 'android' ? 'sans-serif-light' : undefined,
         fontSize: 20
     },
     background: {
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
     },
     number: {
         fontWeight: '300',
+        fontFamily: Platform.OS === 'android' ? 'sans-serif-light' : undefined,
         color: 'white',
         fontSize: 25
     }

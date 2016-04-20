@@ -1,4 +1,4 @@
-import React, {Component, StyleSheet, View, ScrollView, TouchableHighlight, Text, TextInput} from 'react-native';
+import React, {Component, StyleSheet, View, ScrollView, TouchableHighlight, Text, TextInput, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const styles = StyleSheet.create({
@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         color: 'white',
         fontWeight: '100',
+        fontFamily: Platform.OS === 'android' ? 'sans-serif-thin' : undefined,
         paddingLeft: 10,
     },
     button : {
