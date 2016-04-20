@@ -12,7 +12,7 @@ import SearchService from '../services/SearchService';
 import Separator from './Separator';
 
 const styles = StyleSheet.create({
-   page: {flex: 1, paddingTop: 65},
+    page: {flex: 1, paddingTop: 65, backgroundColor: 'transparent'},
     separator: {
         height: 1,
         backgroundColor: 'black',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         left: 0,
         bottom: 0,
         right: 0,
-        resizeMode: 'contain'
+        resizeMode: 'cover'
     },
     number: {
         fontWeight: '300',
@@ -104,7 +104,7 @@ export default class CityList extends Component {
         }
         return (
             <View style={styles.page}>
-                <Image source={require('../../assets/city-bg-portrait.jpeg')} style={styles.background}/>
+                <Image source={{uri: 'city_bg_portrait', isStatic: true}} style={styles.background}/>
 
                 <Spinner visible={this.state.showLoader} color="red" />
                 <TextInput
@@ -142,14 +142,10 @@ export default class CityList extends Component {
                                                     <Text style={styles.number}>{c.nbSport}</Text>
                                                     <Icon name="place" color="white" size={20}/>
                                                 </Text>
-                                                <Text>
-                                                    <Text style={styles.number}>0</Text>
-                                                    <Icon name="favorite" color="white" size={20}/>
-                                                </Text>
                                             </View>
                                         </View>
                                     </TouchableHighlight>
-                                    <View style={{height:1, backgroundColor: '#FFFFFF90'}}></View>
+                                    <Separator style={{backgroundColor: '#FFF9'}}/>
                                 </View>
                             )
                         })

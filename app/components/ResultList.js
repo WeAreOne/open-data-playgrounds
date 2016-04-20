@@ -9,7 +9,8 @@ import ResultRow from './ResultRow';
 const styles = StyleSheet.create({
     page: {
         paddingTop: 65,
-        flex: 1
+        flex: 1,
+        backgroundColor: 'transparent'
     },
     background: {
         position: 'absolute',
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
         left: 0,
         bottom: 0,
         right: 0,
-        resizeMode: 'contain'
+        resizeMode: 'cover'
     },
 });
 export default class ResultList extends Component {
@@ -28,7 +29,7 @@ export default class ResultList extends Component {
             showLoader: true
         };
     }
-   
+
     componentDidMount() {
         let search = SearchService.search;
         MapService.search(search).then(
@@ -58,7 +59,7 @@ export default class ResultList extends Component {
         return (
             <View style={styles.page}>
                 <Spinner visible={this.state.showLoader} color="red"/>
-                <Image source={require('../../assets/city-bg-portrait.jpeg')} style={styles.background}/>
+                <Image source={{uri: 'city_bg_portrait', isStatic: true}} style={styles.background}/>
                 {list}
             </View>
         )
