@@ -5,6 +5,7 @@ import {Actions} from 'react-native-router-flux';
 import Separator from './Separator';
 import MapService from '../services/MapService';
 import EventService from '../services/EventService';
+import UserService from '../services/UserService';
 
 const styles = StyleSheet.create({
     page: {
@@ -59,9 +60,24 @@ export default class Dashboard extends Component {
     _sportList() {
         Actions.sportCity();
     }
+    _loginForm() {
+        Actions.drawer();
+    }
     render() {
         let nbSport = MapService.countSport();
         let nbEvent = EventService.countEvent();
+
+        let user = UserService.getUser(), userView;
+        if (user) {
+            userView = (
+                <View style={{flexDirection: 'row',alignItems: 'center'}}>
+                    <Image source={{uri: user.userPhoto}} style={{width: 100, height: 100, margin: 7, borderRadius: 50, borderColor: 'black', borderWidth: 2}}/>
+                    <Text style={styles.text}>{user.userEmail}</Text>
+                </View>
+            )
+        } else {
+            userView = (<Text style={styles.text}>Profile</Text>);
+        }
 
         return (
             <View style={styles.page}>
@@ -82,9 +98,9 @@ export default class Dashboard extends Component {
                     </TouchableHighlight>
                 </View>
 
-                <View style={[styles.row, styles.tile, {flex: 0.5}]}>
-                    <Text style={styles.text}>Profile</Text>
-                </View>
+                <TouchableHighlight onPress={this._loginForm} style={[styles.row, styles.tile, {flex: 0.5}]}>
+                    {userView}
+                </TouchableHighlight>
 
                 <View style={[styles.row, styles.news]}>
                     <Text style={[styles.text, {fontWeight: '300'}]}>

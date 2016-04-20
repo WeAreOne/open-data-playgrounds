@@ -15,7 +15,11 @@ export default class UserService {
     }
 
     static getUser() {
-        return realm.objects('Auth')[0];
+        let auth = realm.objects('Auth');
+        if (auth.length) {
+            return auth[0];
+        }
+        return undefined;
     }
 
     static isAuth() {
