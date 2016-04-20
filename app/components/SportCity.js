@@ -75,7 +75,7 @@ export default class SportCity extends Component {
             <View style={styles.page}>
                 <TouchableOpacity onPress={this._goToSportList.bind(this)} style={{flex: 1}}>
                     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
-                        <Image source={require('../../assets/sport.jpeg')} style={styles.category}/>
+                        <Image source={{uri: 'sport', isStatic: true}} style={styles.category}/>
                         <View style={styles.categoryTextWrapper}>
                             <Text style={[styles.categoryText]}>Select a sport</Text>
                         </View>
@@ -84,7 +84,7 @@ export default class SportCity extends Component {
 
                 <TouchableOpacity onPress={this._goToCities.bind(this)} style={{flex: 1}}>
                     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
-                        <Image source={require('../../assets/city.jpeg')} style={styles.category}/>
+                        <Image source={{uri: 'city', isStatic: true}} style={styles.category}/>
                         <View style={styles.categoryTextWrapper}>
                             <Text style={[styles.categoryText]}>Select a city</Text>
                         </View>

@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         left: 0,
         bottom: 0,
         right: 0,
-        resizeMode: 'contain'
+        resizeMode: 'cover',
     },
     tile: {
         flex: 1,
@@ -65,7 +65,7 @@ export default class Dashboard extends Component {
 
         return (
             <View style={styles.page}>
-                <Image source={require('../../assets/city-bg-portrait.jpeg')} style={styles.background}/>
+                <Image source={{uri: 'city_bg_portrait', isStatic: true}} style={styles.background}/>
 
                 <View style={[styles.row, styles.row_tiles]}>
                     <TouchableHighlight  style={styles.tile} onPress={this._sportList.bind(this)}>
