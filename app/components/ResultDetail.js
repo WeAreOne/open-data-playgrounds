@@ -1,11 +1,13 @@
 import React, {Component, StyleSheet, View, ScrollView, Text} from 'react-native';
 import CoordinateMap from './CoordinateMap';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 // App
 import MapService from '../services/MapService';
 import Separator from './Separator';
+import InfoDetailTab from './SportDetail/InfoDetailTab';
+import NewsDetailTab from './SportDetail/NewsDetailTab';
 
 const styles = StyleSheet.create({
     page: {
@@ -50,33 +52,11 @@ export default class ResultDetail extends Component {
         return (
             <View style={styles.page}>
                 {map}
-                <View style={styles.actions}>
-                    <Text style={{flex: 1, textAlign: 'center'}}> Report <Icon name="warning" size={25} color="#AAA"/></Text>
-                    <Text style={{flex: 1, textAlign: 'center'}}> Share <Icon name="share" size={25} color="#AAA"/></Text>
-                    <Text style={{flex: 1, textAlign: 'center'}}> 15 <Icon name="favorite" size={25} color="#AAA"/></Text>
-                </View>
-                <View style={styles.container}>
-                    <View>
-                        <Text>{this.props.data.sport}</Text>
-                        <Text>{this.props.data.commune}</Text>
-                        <Text>{this.props.data.type}</Text>
-                        <Text>{this.props.data.ncom}</Text>
-                        <Text>{this.props.data.lienFicheDesc}</Text>
-                        <Text>{this.props.data.lienPhotos}</Text>
-                    </View>
 
-                    <Separator />
-                    <Text>Time</Text>
-                    <Text>No time yet</Text>
-
-                    <Separator />
-                    <Text>Transport</Text>
-                    <Text>No transport yet</Text>
-
-                    <Separator />
-                    <Text>Events</Text>
-                    <Text>No event yet</Text>
-                </View>
+                <ScrollableTabView>
+                    <InfoDetailTab tabLabel="info" {...this.props}/>
+                    <NewsDetailTab tabLabel="news" {...this.props}/>
+                </ScrollableTabView>
             </View>
         )
     }
