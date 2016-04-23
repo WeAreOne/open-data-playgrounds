@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
     },
-    search_container: {flex: 0.3, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white'},
+    search_container: {flex: 0.2, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white'},
     var_text: {
         fontWeight: 'bold',
         color: '#2196F3'
@@ -77,7 +77,11 @@ export default class SportCity extends Component {
                     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
                         <Image source={{uri: 'sport', isStatic: true}} style={styles.category}/>
                         <View style={styles.categoryTextWrapper}>
-                            <Text style={[styles.categoryText]}>Select a sport</Text>
+                            <Text style={[styles.categoryText]}>
+                                {
+                                    sport !== 'ANY SPORT' ? sport : 'Select a sport'
+                                }
+                            </Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -86,25 +90,25 @@ export default class SportCity extends Component {
                     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
                         <Image source={{uri: 'city', isStatic: true}} style={styles.category}/>
                         <View style={styles.categoryTextWrapper}>
-                            <Text style={[styles.categoryText]}>Select a city</Text>
+                            <Text style={[styles.categoryText]}>
+                                {
+                                    city !== 'ANY CITY' ? city : 'Select a city'
+                                }
+                            </Text>
                         </View>
                     </View>
                 </TouchableOpacity>
 
                 <View style={styles.search_container}>
                     <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={this._clearSearch.bind(this)}>
-                            <Icon name="times" backgroundColor="#FFF" color="#000" size={17} style={{marginRight: 10}}/>
-                        </TouchableOpacity>
-                        <Text  style={{marginBottom: 7}}>
-                            <Text style={styles.var_text}> {sport} </Text>
-                            in
-                            <Text style={styles.var_text}> {city} </Text>
-                        </Text>
+                        <Icon.Button name="times" borderRadius={0} backgroundColor="#000" color="#FFF" style={{borderWidth: 2, borderColor: 'black'}} onPress={this._clearSearch.bind(this)}>
+                            Clear
+                        </Icon.Button>
+                        <Icon.Button name="search" borderRadius={0} backgroundColor="#FFF" color="#000" style={{borderWidth: 2, borderColor: 'black'}} onPress={this._search}>
+                            Search
+                        </Icon.Button>
                     </View>
-                    <Icon.Button name="search" borderRadius={0} backgroundColor="#FFF" color="#000" style={{borderWidth: 2, borderColor: 'black'}} onPress={this._search}>
-                        Search
-                    </Icon.Button>
+
                 </View>
             </View>
         )

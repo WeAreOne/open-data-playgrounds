@@ -2,6 +2,7 @@ import React, {Component, StyleSheet, View, ScrollView, TouchableHighlight, Text
 
 // App
 import UserService from '../services/UserService';
+import MapService from '../services/MapService';
 import LoginForm from './LoginForm';
 
 const styles = StyleSheet.create({
@@ -69,6 +70,9 @@ export default class SideBar extends Component {
         UserService.logout();
         this.setState({loggedIn: false});
     }
+    _emptydb() {
+        MapService.emptyDb();
+    }
     render() {
         return (
             <View style={styles.page}>
@@ -88,6 +92,9 @@ export default class SideBar extends Component {
                             </TouchableHighlight>
                         )
                 }
+                <TouchableHighlight onPress={this._emptydb} style={styles.logout}>
+                    <Text style={styles.logout_text}>EMPTY DB</Text>
+                </TouchableHighlight>
             </View>
         )
     }
