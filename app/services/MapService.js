@@ -85,13 +85,16 @@ export default class MapService {
     static getAllCity() {
         return Promise.resolve(realm.objects('City'));
     }
-    static search(search) {
+    static search(search, offset, size) {
         let playgrounds = realm.objects('Playground');
         if (search.city.name !== 'ANY CITY') {
             playgrounds = playgrounds.filtered(`commune ==[c] "${search.city.name}"`)
         }
         if (search.sport.name !== 'ANY SPORT') {
             playgrounds = playgrounds.filtered(`sport ==[c] "${search.sport.name}"`)
+        }
+        if (offset !== undefined && size) {
+            playgrounds = playgrounds.slice(offset, offset + size);
         }
         return Promise.resolve(playgrounds);
     }
