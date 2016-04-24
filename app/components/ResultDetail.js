@@ -5,13 +5,17 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 // App
 import MapService from '../services/MapService';
-import Separator from './Separator';
 import InfoDetailTab from './SportDetail/InfoDetailTab';
 import NewsDetailTab from './SportDetail/NewsDetailTab';
+import EventDetailTab from './SportDetail/EventDetailTab';
+
+import FacebookTabBar from '../tabbar/FacebookTabBar'
 
 const styles = StyleSheet.create({
     page: {
-        paddingTop: 65
+        paddingTop: 65,
+        backgroundColor: '#DDD',
+        flex: 1
     },
     container: {
         paddingLeft: 10,
@@ -52,11 +56,13 @@ export default class ResultDetail extends Component {
         return (
             <View style={styles.page}>
                 {map}
-
-                <ScrollableTabView>
-                    <InfoDetailTab tabLabel="info" {...this.props}/>
-                    <NewsDetailTab tabLabel="news" {...this.props}/>
-                </ScrollableTabView>
+                <View style={{marginLeft: 0, marginRight: 0, backgroundColor: 'white', flex: 1}}>
+                    <ScrollableTabView renderTabBar={() => <FacebookTabBar />}>
+                        <InfoDetailTab tabLabel="ios-paper" {...this.props}/>
+                        <NewsDetailTab tabLabel="ios-world" {...this.props}/>
+                        <EventDetailTab tabLabel="trophy" {...this.props}/>
+                    </ScrollableTabView>
+                </View>
             </View>
         )
     }
