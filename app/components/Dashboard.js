@@ -83,7 +83,7 @@ export default class Dashboard extends Component {
 
         return (
             <View style={styles.page}>
-                <Image source={{uri: 'city_bg_portrait', isStatic: true}} style={styles.background}/>
+                <Image source={{uri: 'background', isStatic: true}} style={styles.background}/>
 
                 <View style={[styles.row, styles.row_tiles]}>
                     <TouchableHighlight  style={styles.tile} onPress={this._sportList.bind(this)}>

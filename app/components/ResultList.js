@@ -59,7 +59,7 @@ export default class ResultList extends Component {
         return (
             <View style={styles.page}>
                 <Spinner visible={this.state.showLoader} color="red"/>
-                <Image source={{uri: 'city_bg_portrait', isStatic: true}} style={styles.background}/>
+                <Image source={{uri: 'background', isStatic: true}} style={styles.background}/>
                 {list}
             </View>
         )
