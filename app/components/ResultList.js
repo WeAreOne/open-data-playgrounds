@@ -26,19 +26,37 @@ export default class ResultList extends Component {
         super();
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            showLoader: true
+            showLoader: true,
+            offset: 0,
+            size: 5
         };
     }
 
     componentDidMount() {
-        let search = SearchService.search;
-        MapService.search(search).then(
+        MapService.search(SearchService.search, this.state.offset, this.state.size).then(
             results => {
                 let dataSource = this.ds.cloneWithRows(results);
                 this.setState(
                     {
                         showLoader: false,
-                        dataSource
+                        dataSource,
+                        results
+                    });
+            }
+        )
+    }
+    _onEndReach() {
+        let nOffset = this.state.offset + this.state.size;
+        MapService.search(SearchService.search, nOffset, this.state.size).then(
+            results => {
+                results = this.state.results.concat(results);
+                let dataSource = this.ds.cloneWithRows(results);
+                this.setState(
+                    {
+                        showLoader: false,
+                        offset: nOffset,
+                        dataSource,
+                        results
                     });
             }
         )
@@ -48,11 +66,12 @@ export default class ResultList extends Component {
             <ListView
                 dataSource={this.state.dataSource}
                 renderRow={(rowData) => <ResultRow row={rowData}/>}
-                pageSize={5}
                 renderFooter={() => {
                     return (
-                        <Text>Show me more</Text>
-                    );
+                        <TouchableHighlight onPress={this._onEndReach.bind(this)} style={{backgroundColor: '#FFF9', height: 50, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={{fontSize: 24, fontWeight: '100'}}>More</Text>
+                        </TouchableHighlight>
+                    )
                 }}
             />
         ): (<View></View>);
