@@ -20,6 +20,13 @@ const styles = StyleSheet.create({
         right: 0,
         resizeMode: 'cover'
     },
+    noResultText: {
+        color: 'white',
+        fontSize: 30,
+        textAlign: 'center',
+        fontWeight: '100',
+        paddingTop: 100
+    }
 });
 export default class ResultList extends Component {
     constructor() {
@@ -27,6 +34,7 @@ export default class ResultList extends Component {
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             showLoader: true,
+            noResult: false,
             offset: 0,
             size: 5
         };
@@ -35,13 +43,16 @@ export default class ResultList extends Component {
     componentDidMount() {
         MapService.search(SearchService.search, this.state.offset, this.state.size).then(
             results => {
-                let dataSource = this.ds.cloneWithRows(results);
-                this.setState(
-                    {
+                if (results.length) {
+                    let dataSource = this.ds.cloneWithRows(results);
+                    this.setState({
                         showLoader: false,
                         dataSource,
                         results
                     });
+                } else {
+                    this.setState({noResult: true, showLoader: false});
+                }
             }
         )
     }
@@ -62,7 +73,7 @@ export default class ResultList extends Component {
         )
     }
     render() {
-        let list = this.state.dataSource ? (
+        let list = this.state.dataSource && !this.state.noResult ? (
             <ListView
                 dataSource={this.state.dataSource}
                 renderRow={(rowData) => <ResultRow row={rowData}/>}
@@ -74,7 +85,7 @@ export default class ResultList extends Component {
                     )
                 }}
             />
-        ): (<View></View>);
+        ): (<View><Text style={styles.noResultText}>No result yet !</Text></View>);
         return (
             <View style={styles.page}>
                 <Spinner visible={this.state.showLoader} color="red"/>
