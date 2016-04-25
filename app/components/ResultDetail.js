@@ -1,6 +1,5 @@
 import React, {Component, StyleSheet, View, ScrollView, Text} from 'react-native';
 import CoordinateMap from './CoordinateMap';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 // App

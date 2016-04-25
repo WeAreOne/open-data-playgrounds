@@ -1,6 +1,7 @@
-import React, {Component, View, ScrollView,  Text, Image, Dimensions, TouchableHighlight, StyleSheet} from 'react-native';
+import React, {Component, View, ScrollView,  Text, Image, Dimensions, TouchableHighlight, StyleSheet, Animated} from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 //APP
 import MapService from '../services/MapService';
@@ -11,7 +12,7 @@ const dim = Dimensions.get('window');
 const styles = StyleSheet.create({
     page: {
         flex: 1,
-        paddingTop: 65
+        paddingTop: 65,
     },
     container: {
         width: 375,
@@ -47,6 +48,16 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         width: dim.width,
         height: 100
+    },
+    confirm_screen: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#000D',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 
@@ -55,7 +66,9 @@ export default class SportList extends Component {
         super();
         this.state = {
             sports: [],
-            showLoader: true
+            showLoader: true,
+            opacity: new Animated.Value(0),
+            confirm: false
         };
         this.sportsOverride = [
             {name: 'gymnastique', bcolor: '#DDDDDD66'},
@@ -66,7 +79,14 @@ export default class SportList extends Component {
     }
     _result(sport) {
         SearchService.setSport(sport);
-        Actions.pop();
+        this.setState({confirm: true});
+
+        Animated.timing(          // Uses easing functions
+            this.state.opacity,    // The value to drive
+            {toValue: 1}            // Configuration
+        ).start(() => {
+            Actions.pop();
+        });
     }
     _getPicture(sport) {
         return PictureService.getPicture(sport)
@@ -79,9 +99,14 @@ export default class SportList extends Component {
         return {}
     }
     render() {
+        let confirm = this.state.confirm ? (<Animated.View style={[styles.confirm_screen, {opacity: this.state.opacity}]}>
+            <Icon name="done" size={50} color="white"/>
+        </Animated.View>) : (<View></View>);
+
         return (
-            <View style={styles.page}>
+            <View style={[styles.page]}>
                 <Spinner visible={this.state.showLoader} color="red" />
+
                 <ScrollView style={{flex:1, flexDirection: 'column'}}>
                     {
                         this.state.sports.map(
@@ -102,6 +127,7 @@ export default class SportList extends Component {
                         )
                     }
                 </ScrollView>
+                {confirm}
             </View>
         )
     }

@@ -1,7 +1,7 @@
 import React, {
     Component, StyleSheet, View, ScrollView, ListView, Text,
     TextInput, Dimensions, TouchableHighlight, TouchableOpacity,
-    Image, Platform} from 'react-native';
+    Image, Platform, Animated} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -80,6 +80,16 @@ const styles = StyleSheet.create({
         fontFamily: Platform.OS === 'android' ? 'sans-serif-light' : undefined,
         color: 'white',
         fontSize: 25
+    },
+    confirm_screen: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#000D',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 
@@ -89,7 +99,9 @@ export default class CityList extends Component {
         this.state = {
             showLoader: true,
             filter: '',
-            cities: []
+            cities: [],
+            confirm: false,
+            opacity: new Animated.Value(0)
         }
     }
     componentWillMount() {
@@ -97,13 +109,23 @@ export default class CityList extends Component {
     }
     _goToCityDetail(city) {
         SearchService.setCity(city);
-        Actions.pop();
+        this.setState({confirm: true});
+        Animated.timing(          // Uses easing functions
+            this.state.opacity,    // The value to drive
+            {toValue: 1}            // Configuration
+        ).start(() => {
+            Actions.pop();
+        });
     }
     render() {
         let cities = this.state.cities;
         if(this.state.filter) {
             cities = cities.filtered(`name BEGINSWITH[c] "${this.state.filter}"`);
         }
+        let confirm = this.state.confirm ? (<Animated.View style={[styles.confirm_screen, {opacity: this.state.opacity}]}>
+            <Icon name="done" size={50} color="white"/>
+        </Animated.View>) : (<View></View>);
+
         return (
             <View style={styles.page}>
                 <Image source={{uri: 'background', isStatic: true}} style={styles.background}/>
@@ -154,6 +176,8 @@ export default class CityList extends Component {
                     }
                     </View>
                 </ScrollView>
+
+                {confirm}
             </View>
         )
     }
