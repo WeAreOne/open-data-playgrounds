@@ -22,14 +22,14 @@ const styles = StyleSheet.create({
     },
     textWrapper: {
         position: 'absolute',
-        top: 65,
-        width: dim.width / 3 + 50,
-        left: dim.width / 3 - 25,
+        top: 25,
+        width: dim.width - 100,
+        left: 50,
         borderWidth: 2,
         borderColor: 'black',
-        paddingTop: 15,
-        paddingBottom: 15,
-        backgroundColor: '#00000010'
+        paddingTop: 7,
+        paddingBottom: 7,
+        backgroundColor: '#FFF9'
     },
     text: {
         textAlign:'center',
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'cover',
         width: dim.width,
-        height: 200
+        height: 100
     }
 });
 
@@ -59,13 +59,6 @@ export default class SportList extends Component {
         };
         this.sportsOverride = [
             {name: 'gymnastique', bcolor: '#DDDDDD66'},
-            {name: 'yoga', bcolor: '#DDDDDD66'},
-            {name: 'arts martiaux', bcolor: '#DDDDDD66'},
-            {name: 'tennis', bcolor: '#DDDDDD66'},
-            {name: 'saut à la perche', bcolor: '#DDDDDD66'},
-            {name: 'sambo', bcolor: '#DDDDDD66'},
-            {name: 'promenade équestre', bcolor: '#DDDDDD66'},
-            {name: 'waterpolo', bcolor: '#DDDDDD66'},
         ];
     }
     componentWillMount() {
@@ -94,7 +87,7 @@ export default class SportList extends Component {
                         this.state.sports.map(
                             (sport,i) => {
                                 return (
-                                    <View key={i} style={{height: 200}}>
+                                    <View key={i} style={{height: 100}}>
                                         <TouchableHighlight onPress={this._result.bind(this, sport)}>
                                             <View style={styles.categoryContainer}>
                                                 <Image source={this._getPicture(sport)} style={styles.categoryImage} />
