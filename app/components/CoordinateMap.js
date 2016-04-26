@@ -22,11 +22,6 @@ export default class CoordinateMap extends Component {
                               latitudeDelta: 0.0052,
                               longitudeDelta: 0.0052,
                             }}
-                    showCompass={false}
-                    zoomEnabled={false}
-                    rotateEnabled={false}
-                    scrollEnabled={false}
-                    pitchEnabled={false}
                 >
                     <MapView.Marker
                         key={0}
