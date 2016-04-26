@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: '100',
         paddingTop: 100
-    }
+    },
+    more_button : {backgroundColor: '#FFF9', height: 50, justifyContent: 'center', alignItems: 'center'}
 });
 export default class ResultList extends Component {
     constructor() {
@@ -36,6 +37,7 @@ export default class ResultList extends Component {
             showLoader: true,
             noResult: false,
             offset: 0,
+            showMore: false,
             size: 5
         };
     }
@@ -47,6 +49,7 @@ export default class ResultList extends Component {
                     let dataSource = this.ds.cloneWithRows(results);
                     this.setState({
                         showLoader: false,
+                        showMore: results.length >= this.state.size,
                         dataSource,
                         results
                     });
@@ -60,11 +63,13 @@ export default class ResultList extends Component {
         let nOffset = this.state.offset + this.state.size;
         MapService.search(SearchService.search, nOffset, this.state.size).then(
             results => {
+                let showMore = results.length >= this.state.size;
                 results = this.state.results.concat(results);
                 let dataSource = this.ds.cloneWithRows(results);
                 this.setState(
                     {
                         showLoader: false,
+                        showMore,
                         offset: nOffset,
                         dataSource,
                         results
@@ -78,11 +83,11 @@ export default class ResultList extends Component {
                 dataSource={this.state.dataSource}
                 renderRow={(rowData) => <ResultRow row={rowData}/>}
                 renderFooter={() => {
-                    return (
-                        <TouchableHighlight onPress={this._onEndReach.bind(this)} style={{backgroundColor: '#FFF9', height: 50, justifyContent: 'center', alignItems: 'center'}}>
+                    return this.state.showMore ? (
+                        <TouchableHighlight onPress={this._onEndReach.bind(this)} style={styles.more_button}>
                             <Text style={{fontSize: 24, fontWeight: '100'}}>More</Text>
                         </TouchableHighlight>
-                    )
+                    ): (<View></View>)
                 }}
             />
         ): (<View><Text style={styles.noResultText}>No result yet !</Text></View>);
