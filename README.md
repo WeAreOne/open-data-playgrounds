@@ -22,11 +22,11 @@ Screenshots
 
 Installation
 ------------
-git clone <project>
+git clone 'project'
 
 npm install -g react-native-cli
 
-cd <project>
+cd 'project'
 
 npm install
 
