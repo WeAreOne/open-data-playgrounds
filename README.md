@@ -1,14 +1,15 @@
-Open Data Playground
-====================
+Open Data Playgrounds
+=====================
 
-The aim of this project is to used open data form Swiss Gov and used it into a React Native app.
+The aim of this project is to used open data from Swiss Gov and used it into a React Native app.
+We choose to use the "List of sport playgrounds in Switzerland" : https://opendata.swiss/fr/dataset/installations-sportives-lieux-de-sports
  
 Features
 --------
 * Find a playground by sport and/or city
 * See the location of a playground
 * Add more details about a playground
-* Add events on a playground (contest, ... )
+* Add events on a playground (contest, ... ) (**TODO**)
  
 Screenshots
 -----------
