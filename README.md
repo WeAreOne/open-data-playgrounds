@@ -14,6 +14,11 @@ Screenshots
 -----------
 ![Alt text](screenshots/MainScreen.png?raw=true "Main Screen")
 ![Alt text](screenshots/SportCity.png?raw=true "Search Screen")
+![Alt text](screenshots/SportList.png?raw=true "Sport List Screen")
+![Alt text](screenshots/CityList.png?raw=true "City List Screen")
+![Alt text](screenshots/ResultList.png?raw=true "Result List Screen")
+![Alt text](screenshots/ResultDetail.png?raw=true "Result Detail Screen")
+
 
 Installation
 ------------
