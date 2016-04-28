@@ -8,7 +8,7 @@ Features
 * Find a playground by sport and/or city
 * See the location of a playground
 * Add more details about a playground
-* Add events on a playground (competition, ... )
+* Add events on a playground (contest, ... )
  
 Screenshots
 -----------
