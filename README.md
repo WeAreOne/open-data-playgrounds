@@ -23,7 +23,12 @@ Screenshots
 Installation
 ------------
 git clone <project>
+
 npm install -g react-native-cli
+
 cd <project>
+
 npm install
-react-native run-ios / react-native run-android 
+
+react-native run-ios / react-native run-android
+ 
