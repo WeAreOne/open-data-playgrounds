@@ -60,7 +60,12 @@ export default class MapService {
                     return root.hits.hits.reduce((arr, el) => {
                         let commune = el._source.COMMUNE;
                         if (arr.map(c => c.name).indexOf(commune) === -1 && commune !== 'COMMUNE') {
-                            arr.push({name: commune});
+                            arr.push({name: commune, nbSport: 1});
+                        } else {
+                            let index = arr.map(c => c.name).indexOf(commune);
+                            if (arr[index]) {
+                                arr[index].nbSport += 1;
+                            }
                         }
                         return arr;
                     }, [])
