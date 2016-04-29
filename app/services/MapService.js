@@ -2,16 +2,13 @@ import realm from '../database/Realm';
 
 export default class MapService {
     URL_CSV = "http://91.121.75.171:9200/_search";
-    URL = 'https://ge.ch/sitgags1/rest/services/VECTOR/SITG_OPENDATA_04/MapServer/6592/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=SPORT%2C+TYPE%2C+COMMUNE%2C+NCOM%2C+CODE%2C+LIEN_FICHE_DESCRIPTIVE%2C+LIEN_PHOTOS&returnGeometry=true&returnTrueCurves=true&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson';
-    URL_SPORTS = 'https://ge.ch/sitgags1/rest/services/VECTOR/SITG_OPENDATA_04/MapServer/6592/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=SPORT&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=true&resultOffset=&resultRecordCount=&f=pjson';
-    URL_CITIES = 'https://ge.ch/sitgags1/rest/services/VECTOR/SITG_OPENDATA_04/MapServer/6592/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=COMMUNE%2C+SPORT&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=COMMUNE&outStatistics=%5B%0D%0A++%7B%0D%0A++++%22statisticType%22%3A+%22count%22%2C%0D%0A++++%22onStatisticField%22%3A+%22SPORT%22%2C%0D%0A++++%22outStatisticFieldName%22%3A+%22NBSPORT%22%0D%0A++%7D%0D%0A%5D&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson';
     static URL_TRANSFORM = 'http://geodesy.geo.admin.ch/reframe/lv95towgs84';
 
     static init() {
         let service = new MapService();
 
         if (!realm.objects('Playground').length) {
-            return service._initPlaygrounds().then(() => { return service._initSport()}).then(() => {return service._initCity()});
+            return service._initPlaygrounds();
         } else {
             return Promise.resolve(0);
         }
@@ -34,69 +31,60 @@ export default class MapService {
             };
             fetch(this.URL_CSV, {method: "POST", body: JSON.stringify(query)}).then(res => res.json()).then(res => {
                 let data = (function(root) {
-                    return root.hits.hits.map(function(el) {
-                        return {
-                            SPORT: el._source.SPORT,
-                            TYPE: el._source.TYPE,
-                            COMMUNE: el._source.COMMUNE,
-                            NCOM: el._source.NCOM,
-                            LIEN_FICHE_DESCRIPTIVE: el._source.LIEN_FICHE_DESCRIPTIVE,
-                            LIEN_PHOTOS: el._source.LIEN_PHOTOS,
-                            E: Number.isNaN(el._source.E) ? 0 : +el._source.E,
-                            N: Number.isNaN(el._source.N) ? 0 : +el._source.N
+                    return root.hits.hits.reduce((arr, el) => {
+                        if (el._source.SPORT !== 'SPORT') {
+                            arr.push({
+                                sport: el._source.SPORT,
+                                type: el._source.TYPE,
+                                commune: el._source.COMMUNE,
+                                ncom: el._source.NCOM,
+                                lienFicheDesc: el._source.LIEN_FICHE_DESCRIPTIVE,
+                                lienPhotos: el._source.LIEN_PHOTOS,
+                                x: Number.isNaN(el._source.E) ? 0 : +el._source.E,
+                                y: Number.isNaN(el._source.N) ? 0 : +el._source.N
+                            });
                         }
-                    });
+                        return arr;
+                    }, []);
+                })(res);
+                let sport = (function(root) {
+                    return root.hits.hits.reduce((arr, el) => {
+                        let sport = el._source.SPORT;
+                        if (arr.map(s => s.name).indexOf(sport) === -1 && sport !== 'SPORT') {
+                            arr.push({name: sport});
+                        }
+                        return arr;
+                    }, [])
+                })(res);
+                let city = (function(root) {
+                    return root.hits.hits.reduce((arr, el) => {
+                        let commune = el._source.COMMUNE;
+                        if (arr.map(c => c.name).indexOf(commune) === -1 && commune !== 'COMMUNE') {
+                            arr.push({name: commune});
+                        }
+                        return arr;
+                    }, [])
                 })(res);
 
                 realm.write(() => {
+                    console.log('Inserting Playground');
                     data.forEach(p => {
-                        if (p.SPORT !== 'SPORT')
-                            realm.create('Playground', {
-                                sport: p.SPORT,
-                                commune: p.COMMUNE,
-                                type: p.TYPE,
-                                ncom: p.NCOM,
-                                lienFicheDesc: p.LIEN_FICHE_DESCRIPTIVE,
-                                lienPhotos: p.LIEN_PHOTOS,
-                                x: p.E,
-                                y: p.N,
-                            })
+                        realm.create('Playground', p)
+                    });
+
+                    console.log('Inserting City');
+                    city.forEach(c => {
+                        realm.create('City', c)
+                    });
+
+                    console.log('Inserting Sport');
+                    sport.forEach(s => {
+                        realm.create('Sport', s)
                     })
                 });
                 resolve();
             });
         })
-    };
-
-    _initCity() {
-        return new Promise(resolve => {
-            fetch(this.URL_CITIES).then(res => res.json()).then(res => {
-                realm.write(() => {
-                    res.features.forEach(c => {
-                        realm.create('City', {
-                            name: c.attributes.COMMUNE,
-                            nbSport: c.attributes.NBSPORT,
-                        })
-                    })
-                });
-                resolve();
-            });
-        });
-    };
-
-    _initSport() {
-        return new Promise(resolve => {
-            fetch(this.URL_SPORTS).then(res => res.json()).then(res => {
-                realm.write(() => {
-                    res.features.forEach(s => {
-                        realm.create('Sport', {
-                            name: s.attributes.SPORT
-                        })
-                    })
-                })
-                resolve();
-            });
-        });
     };
 
     static countSport() {
