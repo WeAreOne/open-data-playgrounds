@@ -1,8 +1,6 @@
 import React, {Component, View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import {Scene, Router, Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Spinner from 'react-native-loading-spinner-overlay';
-
 
 // App
 import SportCity from './SportCity';
@@ -12,6 +10,7 @@ import ResultList from './ResultList';
 import ResultDetail from './ResultDetail';
 import SideBar from './SideBar';
 import Dashboard from './Dashboard';
+import SplashScreen from './SplashScreen';
 
 // Service
 import MapService from '../services/MapService';
@@ -45,7 +44,10 @@ export default class RouterComponent extends Component{
     }
     componentWillMount() {
         UserService.auth();
-        MapService.init().then( () => {
+        let splash = new Promise(resolve => {
+            setTimeout(resolve, 7000);
+        });
+        Promise.all([MapService.init, splash]).then(() => {
             this.setState({isLoading: false});
         });
     }
@@ -74,7 +76,7 @@ export default class RouterComponent extends Component{
                 </Scene>
             </Router>
         );
-        var loading = (<Spinner visible={true} color="red" />);
+        var loading = (<SplashScreen />);
         var comp = this.state.isLoading ? loading : router;
 
         return  comp;
