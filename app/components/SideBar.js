@@ -1,4 +1,5 @@
 import React, {Component, StyleSheet, View, ScrollView, TouchableHighlight, Text, Image, Platform} from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 // App
 import UserService from '../services/UserService';
@@ -49,21 +50,26 @@ export default class SideBar extends Component {
         super();
 
         this.state = {
-            loggedIn: false
+            loggedIn: false,
+            loading: false
         };
+
+        this.debug = false;
     }
     componentWillMount() {
         let loggedIn = UserService.isAuth();
         this.setState({loggedIn});
     }
     _login(username, password) {
+        this.setState({loading: true});
         UserService.login(username, password).then(() => {
-            this.setState({loggedIn: true})
+            this.setState({loggedIn: true, loading: false})
         });
     }
     _createAccount(username, password) {
+        this.setState({loading: true});
         UserService.createAccount(username, password).then(() => {
-            this.setState({loggedIn: true})
+            this.setState({loggedIn: true, loading: false})
         });
     }
     _logout() {
@@ -74,8 +80,12 @@ export default class SideBar extends Component {
         MapService.emptyDb();
     }
     render() {
+        let empty = this.debug ? (<TouchableHighlight onPress={this._emptydb} style={styles.logout}>
+            <Text style={styles.logout_text}>EMPTY DB</Text>
+        </TouchableHighlight>) : null;
         return (
             <View style={styles.page}>
+                <Spinner visible={this.state.loading} color="red" />
                 <Image source={{uri: 'city_bg_portrait', isStatic: true}} style={styles.background}/>
 
                 <Text style={styles.title}>
@@ -92,9 +102,9 @@ export default class SideBar extends Component {
                             </TouchableHighlight>
                         )
                 }
-                <TouchableHighlight onPress={this._emptydb} style={styles.logout}>
-                    <Text style={styles.logout_text}>EMPTY DB</Text>
-                </TouchableHighlight>
+                {
+                    empty
+                }
             </View>
         )
     }
