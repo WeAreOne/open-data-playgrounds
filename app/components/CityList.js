@@ -131,13 +131,15 @@ export default class CityList extends Component {
                 <Image source={{uri: 'background', isStatic: true}} style={styles.background}/>
 
                 <Spinner visible={this.state.showLoader} color="red" />
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(filter) => this.setState({filter})}
-                    value={this.state.filter}
-                    placeholder="Search a city"
-                />
-                <Separator />
+                <View style={{height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', flexDirection: 'row'}}>
+                    <Icon name="search" size={25} style={{width: 30, height: 30}} />
+                    <TextInput
+                        style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1, marginTop: 5}}
+                        onChangeText={(filter) => this.setState({filter})}
+                        placeholder="Search city"
+                        value={this.state.filter}
+                    />
+                </View>
 
                 <View style={{height: 25, flexDirection: 'row', marginBottom: 10}}>
                     <TouchableOpacity style={[styles.filter, styles.filterActive]}>

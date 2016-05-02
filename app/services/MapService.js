@@ -96,7 +96,7 @@ export default class MapService {
         return realm.objects('Playground').length;
     }
     static getAllSport() {
-        return Promise.resolve(realm.objects('Sport'));
+        return Promise.resolve(realm.objects('Sport').sorted('name'));
     }
     static getAllCity() {
         return Promise.resolve(realm.objects('City'));

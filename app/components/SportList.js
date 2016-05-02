@@ -1,4 +1,6 @@
-import React, {Component, View, ScrollView,  Text, Image, Dimensions, TouchableHighlight, StyleSheet, Animated} from 'react-native';
+import React, {Component, View, ScrollView,  Text, Image,
+    Dimensions, TouchableHighlight, StyleSheet, Animated,
+    TextInput} from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -68,7 +70,8 @@ export default class SportList extends Component {
             sports: [],
             showLoader: true,
             opacity: new Animated.Value(0),
-            confirm: false
+            confirm: false,
+            filter: ''
         };
         this.sportsOverride = [
             {name: 'gymnastique', bcolor: '#DDDDDD66'},
@@ -103,13 +106,25 @@ export default class SportList extends Component {
             <Icon name="done" size={50} color="white"/>
         </Animated.View>) : (<View></View>);
 
+        let sports = this.state.sports;
+        if(this.state.filter) {
+            sports = sports.filtered(`name BEGINSWITH[c] "${this.state.filter}"`);
+        }
         return (
             <View style={[styles.page]}>
                 <Spinner visible={this.state.showLoader} color="red" />
-
+                <View style={{height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', flexDirection: 'row'}}>
+                    <Icon name="search" size={25} style={{width: 30, height: 30}} />
+                    <TextInput
+                        style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1, marginTop: 5}}
+                        onChangeText={(filter) => this.setState({filter})}
+                        placeholder="Search sport"
+                        value={this.state.filter}
+                    />
+                </View>
                 <ScrollView style={{flex:1, flexDirection: 'column'}}>
                     {
-                        this.state.sports.map(
+                        sports.map(
                             (sport,i) => {
                                 return (
                                     <View key={i} style={{height: 100}}>
