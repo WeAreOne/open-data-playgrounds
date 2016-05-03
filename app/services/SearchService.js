@@ -21,7 +21,7 @@ export default class SearchService {
         };
     }
     static history () {
-        return Promise.resolve(realm.objects('SearchHistory'));
+        return Promise.resolve(realm.objects('SearchHistory').sorted("date", true));
     }
     static save() {
         realm.write(() => {
