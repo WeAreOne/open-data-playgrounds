@@ -65,6 +65,10 @@ export default class SportCity extends Component {
         })
     }
     _search() {
+        // Saving the search
+        SearchService.save();
+
+        // Redirect to results 
         Actions.resultList();
     }
     render() {

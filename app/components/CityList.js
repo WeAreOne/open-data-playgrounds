@@ -141,15 +141,6 @@ export default class CityList extends Component {
                     />
                 </View>
 
-                <View style={{height: 25, flexDirection: 'row', marginBottom: 10}}>
-                    <TouchableOpacity style={[styles.filter, styles.filterActive]}>
-                        <Text style={[styles.filterText, styles.filterTextActive]}>All</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.filter}>
-                        <Text style={styles.filterText}>Favorites</Text>
-                    </TouchableOpacity>
-                </View>
-
                 <ScrollView>
                     <View style={styles.resultList}>
                     {

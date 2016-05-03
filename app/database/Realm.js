@@ -28,7 +28,7 @@ const PlaygroundSchema = {
         x: 'float',
         y: 'float'
     }
-}
+};
 
 const AuthSchema = {
     name: 'Auth',
@@ -37,6 +37,14 @@ const AuthSchema = {
         userEmail: 'string',
         userPhoto: 'string'
     }
-}
-export default new Realm({schema: [SportSchema, CitySchema, PlaygroundSchema, AuthSchema]});
+};
 
+const SearchHistorySchema = {
+    name: 'SearchHistory',
+    properties: {
+        sport: 'string',
+        city: 'string',
+        date: 'date'
+    }
+};
+export default new Realm({schema: [SportSchema, CitySchema, PlaygroundSchema, AuthSchema, SearchHistorySchema]});

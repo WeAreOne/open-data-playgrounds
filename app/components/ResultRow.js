@@ -68,7 +68,7 @@ export default class ResultRow extends Component {
                             </Text>
                         </View>
                         <View style={styles.icon_container}>
-                            <Icon name="my-location" size={23} color="white" />
+                            <Icon name="play-circle-outline" size={23} color="white" />
                         </View>
                     </View>
                 </View>

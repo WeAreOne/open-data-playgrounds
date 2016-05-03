@@ -11,6 +11,7 @@ import ResultDetail from './ResultDetail';
 import SideBar from './SideBar';
 import Dashboard from './Dashboard';
 import SplashScreen from './SplashScreen';
+import SearchHistory from './SearchHistory';
 
 // Service
 import MapService from '../services/MapService';
@@ -47,18 +48,23 @@ export default class RouterComponent extends Component{
         let splash = new Promise(resolve => {
             setTimeout(resolve, 7000);
         });
-        Promise.all([MapService.init, splash]).then(() => {
+        let data = new Promise(resolve => {
+            MapService.init().then(() => {
+                resolve();
+            });
+        });
+        Promise.all([data, splash]).then(() => {
             this.setState({isLoading: false});
         });
     }
-    _options(){
-        Actions.drawer();
+    _history(){
+        Actions.searchHistory();
     }
 
     _hamburger() {
         return (
-            <TouchableOpacity onPress={this._options} style={styles.menu_icon_ios}>
-                <Icon name="menu" size={23} color="#000" />
+            <TouchableOpacity onPress={this._history} style={styles.menu_icon_ios}>
+                <Icon name="history" size={23} color="#000" />
             </TouchableOpacity>
         );
     }
@@ -68,17 +74,15 @@ export default class RouterComponent extends Component{
                 <Scene key="root" navigationBarStyle={styles.navBar}>
                     <Scene key="dashboard" component={Dashboard} initial={true} hideNavBar={true} title="App"/>
                     <Scene key="sportCity" component={SportCity} title="Find a playground" renderRightButton={this._hamburger.bind(this)}/>
-                    <Scene key="sportList" component={SportList} title="Choose a sport" renderRightButton={this._hamburger.bind(this)}/>
-                    <Scene key="cityList" component={CityList} title="Choose a city" renderRightButton={this._hamburger.bind(this)}/>
-                    <Scene key="resultList" component={ResultList} title="Result List" renderRightButton={this._hamburger.bind(this)}/>
-                    <Scene key="resultDetail" component={ResultDetail} title="Result Detail" renderRightButton={this._hamburger.bind(this)}/>
+                    <Scene key="sportList" component={SportList} title="Choose a sport" />
+                    <Scene key="cityList" component={CityList} title="Choose a city" />
+                    <Scene key="resultList" component={ResultList} title="Your results"/>
+                    <Scene key="resultDetail" component={ResultDetail} title="Result Detail"/>
+                    <Scene key="searchHistory" component={SearchHistory} title="History"/>
                     <Scene key="drawer" title="Sign in / Sign Up" component={SideBar} direction="vertical"/>
                 </Scene>
             </Router>
         );
-        var loading = (<SplashScreen />);
-        var comp = this.state.isLoading ? loading : router;
-
-        return  comp;
+        return this.state.isLoading ? (<SplashScreen />) : router;
     }
 }
