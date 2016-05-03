@@ -13,6 +13,10 @@ import Dashboard from './Dashboard';
 import SplashScreen from './SplashScreen';
 import SearchHistory from './SearchHistory';
 
+// Screens
+import ContestList from '../screens/ContestList';
+import ContestNew from '../screens/ContestNew';
+
 // Service
 import MapService from '../services/MapService';
 import UserService from '../services/UserService';
@@ -79,6 +83,9 @@ export default class RouterComponent extends Component{
                     <Scene key="resultList" component={ResultList} title="Your results"/>
                     <Scene key="resultDetail" component={ResultDetail} title="Result Detail"/>
                     <Scene key="searchHistory" component={SearchHistory} title="History"/>
+                    <Scene key="contestList" component={ContestList} title="Contests"/>
+                    <Scene key="contestNew" component={ContestNew} title="New Contest"/>
+
                     <Scene key="drawer" title="Sign in / Sign Up" component={SideBar} direction="vertical"/>
                 </Scene>
             </Router>

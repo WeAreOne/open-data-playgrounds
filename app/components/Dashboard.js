@@ -4,7 +4,7 @@ import {Actions} from 'react-native-router-flux';
 // App
 import Separator from './Separator';
 import MapService from '../services/MapService';
-import EventService from '../services/EventService';
+import ContestService from '../services/ContestService';
 import UserService from '../services/UserService';
 
 const styles = StyleSheet.create({
@@ -62,12 +62,15 @@ export default class Dashboard extends Component {
     _sportList() {
         Actions.sportCity();
     }
+    _contestList() {
+        Actions.contestList();
+    }
     _loginForm() {
         Actions.drawer();
     }
     render() {
         let nbSport = MapService.countSport();
-        let nbEvent = EventService.countEvent();
+        let nbEvent = ContestService.countEvent();
 
         let user = UserService.getUser(), userView;
         if (user) {
@@ -92,10 +95,10 @@ export default class Dashboard extends Component {
                             <Text style={styles.text}> PLAYGROUNDS</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight  style={styles.tile}>
+                    <TouchableHighlight  style={styles.tile} onPress={this._contestList.bind(this)}>
                         <View style={{justifyContent: 'center', alignItems: 'center'}}>
                             <Text style={styles.number}>{nbEvent}</Text>
-                            <Text style={styles.text}> EVENTS</Text>
+                            <Text style={styles.text}> CONTESTS</Text>
                         </View>
                     </TouchableHighlight>
                 </View>
