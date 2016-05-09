@@ -1,6 +1,5 @@
 import React, {Component, StyleSheet, View, ScrollView, TouchableHighlight, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Actions} from 'react-native-router-flux';
 
 //App
 import MapService from '../services/MapService';
@@ -51,7 +50,7 @@ export default class ResultRow extends Component {
         MapService.transform(this.props.row).then(point => this.setState({point}));
     }
     _resultDetail(row) {
-        Actions.resultDetail({data: row, title: row.commune});
+        this.props.resultDetail(row);
     }
     render() {
         let map = this.state.point.northing ? (<View style={styles.map}><CoordinateMap point={this.state.point} /></View>) : (<View />);

@@ -1,5 +1,6 @@
-import React, {Component, StyleSheet, View, ListView, ScrollView, TouchableHighlight, Text, Image} from 'react-native';
+import React, {Component, StyleSheet, View, ListView, ScrollView, TouchableHighlight, Text, Image, Platform} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import {Actions} from 'react-native-router-flux';
 
 //App
 import MapService from '../services/MapService';
@@ -38,10 +39,10 @@ export default class ResultList extends Component {
             noResult: false,
             offset: 0,
             showMore: false,
-            size: 5
+            size: 5,
+            visible: true
         };
     }
-
     componentDidMount() {
         MapService.search(SearchService.search, this.state.offset, this.state.size).then(
             results => {
@@ -51,7 +52,8 @@ export default class ResultList extends Component {
                         showLoader: false,
                         showMore: results.length >= this.state.size,
                         dataSource,
-                        results
+                        results,
+                        visible: true
                     });
                 } else {
                     this.setState({noResult: true, showLoader: false});
@@ -77,11 +79,16 @@ export default class ResultList extends Component {
             }
         )
     }
+    _resultDetail(row) {
+        if (Platform.OS === 'android') this.setState({visible: false});
+        Actions.resultDetail({data: row, title: row.commune});
+        if (Platform.OS === 'android') setTimeout(() => this.setState({visible: true}), 500);
+    }
     render() {
-        let list = this.state.dataSource && !this.state.noResult ? (
+        let list = this.state.dataSource && !this.state.noResult && this.state.visible ? (
             <ListView
                 dataSource={this.state.dataSource}
-                renderRow={(rowData) => <ResultRow row={rowData}/>}
+                renderRow={(rowData) => <ResultRow row={rowData} resultDetail={this._resultDetail.bind(this)}/>}
                 renderFooter={() => {
                     return this.state.showMore ? (
                         <TouchableHighlight onPress={this._onEndReach.bind(this)} style={styles.more_button}>
