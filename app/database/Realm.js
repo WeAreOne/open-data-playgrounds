@@ -19,6 +19,7 @@ const CitySchema = {
 const PlaygroundSchema = {
     name: 'Playground',
     properties: {
+        _id: 'string',
         sport: 'string',
         commune: 'string',
         type: 'string',

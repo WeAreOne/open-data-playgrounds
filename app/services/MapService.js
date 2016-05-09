@@ -34,6 +34,7 @@ export default class MapService {
                     return root.hits.hits.reduce((arr, el) => {
                         if (el._source.SPORT !== 'SPORT') {
                             arr.push({
+                                _id: el._id,
                                 sport: el._source.SPORT,
                                 type: el._source.TYPE,
                                 commune: el._source.COMMUNE,
