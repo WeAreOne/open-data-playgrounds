@@ -60,7 +60,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#000D',
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    searchInput: {height: 40, width: 300, borderColor: 'gray', borderWidth: 1, marginTop: 5, backgroundColor: 'white'},
+    searchContainer: {height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: 'black', flexDirection: 'row'}
 });
 
 export default class SportList extends Component {
@@ -113,10 +115,10 @@ export default class SportList extends Component {
         return (
             <View style={[styles.page]}>
                 <Spinner visible={this.state.showLoader} color="red" />
-                <View style={{height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', flexDirection: 'row'}}>
-                    <Icon name="search" size={25} style={{width: 30, height: 30}} />
+                <View style={styles.searchContainer}>
+                    <Icon name="search" size={25} style={{width: 30, height: 30}} color="white"/>
                     <TextInput
-                        style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1, marginTop: 5}}
+                        style={styles.searchInput}
                         onChangeText={(filter) => this.setState({filter})}
                         placeholder="Search sport"
                         value={this.state.filter}
