@@ -33,9 +33,9 @@ export default class InfoDetailTab extends Component {
                     <View style={{flex: 3}}>
                         <Text>{this.props.data.lienFicheDesc}</Text>
                         <Text>{this.props.data.lienPhotos}</Text>
+                        <Text>ID : {this.props.data._id}</Text>
                     </View>
                 </View>
-
             </View>
         );
     }

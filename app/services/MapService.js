@@ -119,4 +119,7 @@ export default class MapService {
         return fetch(this.URL_TRANSFORM+`?easting=${point.x}&northing=${point.y}&format=json`)
             .then(res => res.json());
     }
+    static getPlaygroundById(id) {
+        return realm.objects('Playground').filtered(`_id ==[c] "${id}"`)[0];
+    }
 }

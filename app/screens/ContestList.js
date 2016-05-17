@@ -1,7 +1,10 @@
 import React, {Component, View, Text, StyleSheet, TouchableHighlight, Image, ScrollView} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
+//App
+import ContestService from '../services/ContestService';
+import ContestListDetail from '../components/contests/ContestListDetail' ;
+import Separator from '../components/Separator' ;
 
 const styles = StyleSheet.create({
     page: {
@@ -34,6 +37,17 @@ const styles = StyleSheet.create({
     }
 });
 export default class ContestList extends Component {
+    constructor() {
+        super();
+        this.state = {
+            contests: []
+        }
+    }
+    componentWillMount() {
+        ContestService.list().then(contests => {
+            this.setState({contests});
+        });
+    }
     _newContest() {
         Actions.contestNew();
     }
@@ -42,13 +56,14 @@ export default class ContestList extends Component {
             <View style={styles.page}>
                 <Image source={{uri: 'background', isStatic: true}} style={styles.background}/>
 
-                <TouchableHighlight onPress={this._newContest.bind(this)}>
-                    <View style={styles.button}>
-                        <Icon name="add-box" size={25} color="white" />
-                        <Text style={styles.buttonText}>CREATE CONTEST</Text>
-                    </View>
-                </TouchableHighlight>
-                <Text>Contest List</Text>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={{color: 'white', fontStyle: 'italic'}}>Contact us at <Text style={{fontWeight: 'bold'}}>odp-events@weareone.ch</Text> to add your event
+                    </Text>
+                </View>
+
+                <Separator style={{marginRight: 15, marginLeft: 15, backgroundColor: 'white'}}/>
+
+                <ContestListDetail contests={this.state.contests} />
             </View>
         );
     }
