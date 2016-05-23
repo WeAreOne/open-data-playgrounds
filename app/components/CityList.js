@@ -119,6 +119,16 @@ export default class CityList extends Component {
             Actions.pop();
         });
     }
+    _myLocation() {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                var initialPosition = JSON.stringify(position);
+                alert(initialPosition);
+            },
+            (error) => alert(error.message),
+            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+        );
+    }
     render() {
         let cities = this.state.cities;
         if(this.state.filter) {
@@ -144,6 +154,23 @@ export default class CityList extends Component {
                 </View>
 
                 <ScrollView>
+                    <View style={{flex: 1}}>
+                        <TouchableHighlight style={{flex: 1}} onPress={this._myLocation.bind(this)}>
+                            <View style={styles.row}>
+                                <View style={styles.row}>
+                                    <Text style={styles.city_name}>
+                                        My Location
+                                    </Text>
+                                </View>
+                                <View style={[styles.row, {justifyContent: 'flex-end'}]}>
+                                    <Text>
+                                        <Icon name="place" color="white" size={20}/>
+                                    </Text>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                        <Separator style={{backgroundColor: '#FFF9'}}/>
+                    </View>
                     <View style={styles.resultList}>
                     {
                         cities.map((c,i) => {
